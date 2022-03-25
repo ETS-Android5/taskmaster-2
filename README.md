@@ -29,4 +29,6 @@
 
 [Apk build file](apk_builds/apk_lab26/app-debug.apk)
 
+### Collaborator
 
+- Tony Regalado
