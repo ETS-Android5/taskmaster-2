@@ -43,24 +43,24 @@
 - Create a Task Detail page.
 - It should have a title at the top of the page, and a Lorem Ipsum description.
 
-<img src="/screenshots/lab27/task1.png" width="450">
-<img src="/screenshots/lab27/task2.png" width="450">
-<img src="/screenshots/lab27/task3.png" width="450">
+<img src="/images/lab27/task1.png" width="450">
+<img src="/images/lab27/task2.png" width="450">
+<img src="/images/lab27/task3.png" width="450">
 
 #### Settings Page
 
 - create a settings page. It should allow users to enter their username and hit save.
 
-<img src="/screenshots/lab27/settingspage.png" width="450">
-<img src="/screenshots/lab27/savedNickname.png" width="450">
+<img src="/images/lab27/settingspage.png" width="450">
+<img src="/images/lab27/savedNickname.png" width="450">
 
 #### HomePage
 
 - The main page should be modified to contain three different buttons with hardcoded task titles.
 - When a user taps one of the titles, it should go to the Task Detail page, and the title at the top of the page should match the task title that was tapped on the previous page.
 
-<img src="/screenshots/lab27/home1.png" width="450">
-<img src="/screenshots/lab27/home2.png" width="450">
+<img src="/images/lab27/home1.png" width="450">
+<img src="/images/lab27/home2.png" width="450">
 
 ### Documentation
 
