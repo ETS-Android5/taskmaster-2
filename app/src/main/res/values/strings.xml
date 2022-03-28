@@ -12,6 +12,17 @@
     <string name="task_description">Task Description</string>
     <string name="add_task_">Add Task</string>
     <string name="my_task_">My Task</string>
+    <string name="all_tasks_button">All Tasks</string>
+    <string name="nickname">Nickname: %1$s</string>
+    <string name="save">Save</string>
+    <string name="nickname_title">Nickname</string>
+    <string name="enter_nickname">Enter Nickname</string>
+
+    <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque eget lacinia dolor,
+    laoreet finibus leo. Nullam in eros leo. Proin efficitur tristique consequat. Morbi ultricies est nulla,
+    non vehicula tortor laoreet vitae. Ut pharetra eget lectus ut tempor. Aenean sollicitudin lectus vel
+    diam venenatis tempus. Vivamus sed vehicula mauris, non gravida arcu.</string>
+    <string name="task_title_task_detail_activity">%1$s</string>
 
 
 </resources>
