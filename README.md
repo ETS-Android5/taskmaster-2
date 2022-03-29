@@ -99,7 +99,38 @@
 
 
 
+# Lab 29   Saving Data with Room
 
+## Overview
+
+- Refactor my model layer to store Task data in a local database.
+
+### Feature Tasks
+
+- Task Model and Room
+- Following the directions provided in the Android documentation, set up Room in your application, and modify your Task class to be an Entity.
+- Add Task Form
+- Modify your Add Task form to save the data entered in as a Task in your local database.
+
+#### Homepage
+
+- Refactor my homepage’s RecyclerView to display all Task entities in your database.
+
+#### Detail Page
+- The description and status of a tapped task are also displayed on the detail page, in addition to the title. (Note that you can accomplish this by passing along the entire Task entity, or by passing along only its ID in the intent.)
+
+
+#### Testing
+
+- Used Espresso to test relevant functionality of my application; for instance, tap on an item on the My Tasks page, and ensure that the correct details are rendered on the Detail page.
+
+
+##### Documentation 
+
+<img src="/images/lab29/homepagelab29.png" width="450">
+<img src="/images/lab29/taskdetailpage.png" width="450">
+<img src="/images/lab29/addtaskpage.png" width="450">
+<img src="/images/lab29/AddTaskSubmittedpage.png" width="450">
 
 
 

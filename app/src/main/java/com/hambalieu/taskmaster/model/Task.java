@@ -9,7 +9,7 @@ import java.util.Date;
 @Entity
 public class Task {
     @PrimaryKey(autoGenerate = true)
-    Long id;
+    public  Long id;
     String title;
     String body;
     State state;
