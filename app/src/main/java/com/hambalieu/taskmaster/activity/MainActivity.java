@@ -3,6 +3,7 @@ package com.hambalieu.taskmaster.activity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -16,10 +17,12 @@ import android.widget.TextView;
 
 import com.hambalieu.taskmaster.R;
 import com.hambalieu.taskmaster.adapter.TaskListRecyclerViewAdapter;
+import com.hambalieu.taskmaster.database.TaskmasterDatabase;
 import com.hambalieu.taskmaster.model.Task;
 import com.hambalieu.taskmaster.model.State;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -30,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     SharedPreferences preferences;
     TaskListRecyclerViewAdapter taskListRecyclerViewAdapter;
     List<Task> taskList = new ArrayList<>();
+    TaskmasterDatabase taskMasterDatabase;
 
 
 
@@ -38,6 +42,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        taskMasterDatabase = Room.databaseBuilder(
+                getApplicationContext(),
+                TaskmasterDatabase.class,
+                "task_master_database")
+                .allowMainThreadQueries() // don't do this in a real app
+                .build();
+
+
         buttonToGoAddTaskPage();
         buttonToGoAllTaskPage();
         buttonToGoSettingsPage();
@@ -91,11 +104,10 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView taskDisplayRecyclerView = (RecyclerView)findViewById(R.id.recyclerViewTaskMainActivity);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         taskDisplayRecyclerView.setLayoutManager(layoutManager);
-        taskList.add(new Task("Homework", "finish lab work for each class", State.In_progress));
-        taskList.add(new Task("Grocery", "Go to Safeway to get groceries for the week", State.New));
-        taskList.add(new Task("Laundry", "switch clothes to dryer", State.In_progress));
-        taskList.add(new Task("Workout", "completed workout for the day", State.Complete));
-        taskList.add(new Task("Wash car", "go to car wash tomorrow", State.Assigned));
+        taskList.add(new Task("Homework", "finish lab work for each class", State.In_progress, new Date()));
+
+        taskMasterDatabase.taskDao().insert(taskList.get(0));
+
 
         taskListRecyclerViewAdapter = new TaskListRecyclerViewAdapter(taskList, this);
         taskDisplayRecyclerView.setAdapter(taskListRecyclerViewAdapter);

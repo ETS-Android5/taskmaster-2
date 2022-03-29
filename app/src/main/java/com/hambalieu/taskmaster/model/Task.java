@@ -1,16 +1,37 @@
 package com.hambalieu.taskmaster.model;
 
-public class Task {
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
+import java.util.Date;
+
+
+@Entity
+public class Task {
+    @PrimaryKey(autoGenerate = true)
+    Long id;
     String title;
     String body;
     State state;
+    java.util.Date dateCreated;
 
-    public Task(String title, String body, State state) {
+
+
+    public Task(String title, String body, State state, Date dateCreated)
+    {
         this.title = title;
         this.body = body;
         this.state = state;
+        this.dateCreated = dateCreated;
     }
+
+
+    public Long getId() {
+        return id;
+    }
+
+
+
 
 
     public String getTitle() {
@@ -36,6 +57,15 @@ public class Task {
     public void setState(State state) {
         this.state = state;
     }
+
+    public Date getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(Date dateCreated){
+        this.dateCreated = dateCreated;
+    }
+
 
 
 }
