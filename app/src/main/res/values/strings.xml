@@ -23,6 +23,10 @@
     non vehicula tortor laoreet vitae. Ut pharetra eget lectus ut tempor. Aenean sollicitudin lectus vel
     diam venenatis tempus. Vivamus sed vehicula mauris, non gravida arcu.</string>
     <string name="task_title_task_detail_activity">%1$s</string>
+    <!-- TODO: Remove or change this placeholder text -->
+<!--    <string name="hello_blank_fragment">Hello blank fragment</string>-->
+    <string name="blank_task_name">Blank Task Name</string>
+    <string name="no_task">No Task</string>
 
 
 </resources>

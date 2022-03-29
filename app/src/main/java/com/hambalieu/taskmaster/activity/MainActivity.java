@@ -1,6 +1,8 @@
-package com.hambalieu.taskmaster;
+package com.hambalieu.taskmaster.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,9 +14,23 @@ import android.widget.ImageButton;
 
 import android.widget.TextView;
 
+import com.hambalieu.taskmaster.R;
+import com.hambalieu.taskmaster.adapter.TaskListRecyclerViewAdapter;
+import com.hambalieu.taskmaster.model.Task;
+import com.hambalieu.taskmaster.model.State;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
     public static final String TASK_DETAIL_TITLE_TASK_TAG = "Task Detail Title";
+    public static final String TASK_BODY_TAG = "BODY";
+    public static final String TASK_STATE_TAG = "STATE";
+    public static final String USER_USERNAME_TAG = "userUsername";
     SharedPreferences preferences;
+    TaskListRecyclerViewAdapter taskListRecyclerViewAdapter;
+    List<Task> taskList = new ArrayList<>();
+
 
 
     @Override
@@ -25,9 +41,7 @@ public class MainActivity extends AppCompatActivity {
         buttonToGoAddTaskPage();
         buttonToGoAllTaskPage();
         buttonToGoSettingsPage();
-        taskOneToTaskDetailPage();
-        taskTwoToTaskDetailPage();
-        taskThreeToTaskDetailPage();
+        taskListRecyclerView();
 
     }
 
@@ -72,56 +86,21 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void taskOneToTaskDetailPage(){
-        TextView taskOne = (TextView) findViewById(R.id.textViewTask1MainActivity);
-        taskOne.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent goToTaskDetailPage = new Intent(MainActivity.this , TaskDetailActivity.class );
-                startActivity(goToTaskDetailPage);
-                String taskTitle = "Workout";
-                SharedPreferences.Editor preferenceEditor = preferences.edit();
-                preferenceEditor.putString(TASK_DETAIL_TITLE_TASK_TAG, taskTitle);
-                preferenceEditor.apply();
 
-            }
-        });
+    public void taskListRecyclerView(){
+        RecyclerView taskDisplayRecyclerView = (RecyclerView)findViewById(R.id.recyclerViewTaskMainActivity);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        taskDisplayRecyclerView.setLayoutManager(layoutManager);
+        taskList.add(new Task("Homework", "finish lab work for each class", State.In_progress));
+        taskList.add(new Task("Grocery", "Go to Safeway to get groceries for the week", State.New));
+        taskList.add(new Task("Laundry", "switch clothes to dryer", State.In_progress));
+        taskList.add(new Task("Workout", "completed workout for the day", State.Complete));
+        taskList.add(new Task("Wash car", "go to car wash tomorrow", State.Assigned));
+
+        taskListRecyclerViewAdapter = new TaskListRecyclerViewAdapter(taskList, this);
+        taskDisplayRecyclerView.setAdapter(taskListRecyclerViewAdapter);
+
     }
-
-
-    public void taskTwoToTaskDetailPage(){
-        TextView taskTwo = (TextView) findViewById(R.id.textViewTask2MainActivity);
-        taskTwo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent goToTaskDetailPage = new Intent(MainActivity.this , TaskDetailActivity.class );
-                startActivity(goToTaskDetailPage);
-                String taskTitle = "Do Homework";
-                SharedPreferences.Editor preferenceEditor = preferences.edit();
-                preferenceEditor.putString(TASK_DETAIL_TITLE_TASK_TAG, taskTitle);
-                preferenceEditor.apply();
-
-            }
-        });
-    }
-
-
-    public void taskThreeToTaskDetailPage(){
-        TextView taskThree = (TextView) findViewById(R.id.textViewMyTask3MainActivity);
-        taskThree.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent goToTaskDetailPage = new Intent(MainActivity.this , TaskDetailActivity.class );
-                startActivity(goToTaskDetailPage);
-                String taskTitle = "Go to Class";
-                SharedPreferences.Editor preferenceEditor = preferences.edit();
-                preferenceEditor.putString(TASK_DETAIL_TITLE_TASK_TAG, taskTitle);
-                preferenceEditor.apply();
-
-            }
-        });
-    }
-
 
 
 }
