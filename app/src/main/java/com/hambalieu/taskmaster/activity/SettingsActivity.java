@@ -1,4 +1,4 @@
-package com.hambalieu.taskmaster;
+package com.hambalieu.taskmaster.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.hambalieu.taskmaster.R;
 
 public class SettingsActivity extends AppCompatActivity {
 

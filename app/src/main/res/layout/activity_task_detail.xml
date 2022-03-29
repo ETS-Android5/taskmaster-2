@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TaskDetailActivity">
+    tools:context=".activity.TaskDetailActivity">
 
   <TextView
       android:id="@+id/textViewTaskTitleTaskDetailActivity"
@@ -19,15 +19,22 @@
       app:layout_constraintTop_toTopOf="parent" />
 
   <TextView
-      android:id="@+id/textViewloremIpsumTaskDetailActivity"
-      android:layout_width="0dp"
+      android:id="@+id/textViewBodyOnTaskDetailActivity"
+      android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_marginStart="32dp"
-      android:layout_marginEnd="32dp"
-      android:layout_marginBottom="364dp"
-      android:text="@string/lorem_ipsum"
-      app:layout_constraintBottom_toBottomOf="parent"
+      android:layout_marginTop="88dp"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintHorizontal_bias="0.467"
-      app:layout_constraintStart_toStartOf="parent" />
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/textViewTaskTitleTaskDetailActivity" />
+
+  <TextView
+      android:id="@+id/textViewStateOnTaskDetailActivity"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="124dp"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.467"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/textViewBodyOnTaskDetailActivity" />
 </androidx.constraintlayout.widget.ConstraintLayout>
