@@ -11,12 +11,11 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="212dp"
+        android:layout_marginTop="144dp"
         android:layout_marginEnd="32dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:minHeight="48dp"
-        android:text="@string/my_task_"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -32,23 +31,20 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:minHeight="48dp"
-        android:text="@string/do_something"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextSingleTaskInputOnAddTaskActivity"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextSingleTaskInputOnAddTaskActivity" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="52dp"
         android:text="@string/add_task_"
-        android:textSize="20sp"
+        android:textSize="28sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.461"
+        app:layout_constraintHorizontal_bias="0.442"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -56,12 +52,12 @@
         android:id="@+id/textViewSingleTaskTitleOnAddTaskActivity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
+        android:layout_marginBottom="4dp"
         android:text="@string/task_title"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/editTextSingleTaskInputOnAddTaskActivity"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.405"
+        app:layout_constraintHorizontal_bias="0.098"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
@@ -72,7 +68,7 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/editTextInputDescriptionOnAddTaskActivity"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.122"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
@@ -82,23 +78,24 @@
         android:text="@string/add_task"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.079"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.641" />
+        app:layout_constraintVertical_bias="0.713" />
 
     <TextView
         android:id="@+id/textViewTotalTaskOnAddTaskActivity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="220dp"
+        android:layout_marginTop="112dp"
         android:text="@string/total_tasks"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.079"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonAddTaskOnAddTaskActivity" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonAddTaskOnAddTaskActivity"
+        app:layout_constraintVertical_bias="0.28" />
 
     <TextView
         android:id="@+id/textViewSubmittedOnAddTaskActivity"
@@ -110,4 +107,28 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.469"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <Spinner
+        android:id="@+id/spinnerTaskStateAddTaskActivity"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="88dp"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextInputDescriptionOnAddTaskActivity" />
+
+    <TextView
+        android:id="@+id/textViewTaskSpinnerTittleAddTaskActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:text="Task  State"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/spinnerTaskStateAddTaskActivity"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.105"
+        app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

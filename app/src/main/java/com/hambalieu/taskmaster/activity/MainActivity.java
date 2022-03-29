@@ -32,8 +32,9 @@ public class MainActivity extends AppCompatActivity {
     public static final String USER_USERNAME_TAG = "userUsername";
     SharedPreferences preferences;
     TaskListRecyclerViewAdapter taskListRecyclerViewAdapter;
-    List<Task> taskList = new ArrayList<>();
     TaskmasterDatabase taskMasterDatabase;
+    List<Task> taskList = null;
+
 
 
 
@@ -50,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
                 .allowMainThreadQueries() // don't do this in a real app
                 .build();
 
+        taskList= taskMasterDatabase.taskDao().findAll();
 
         buttonToGoAddTaskPage();
         buttonToGoAllTaskPage();
@@ -104,10 +106,6 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView taskDisplayRecyclerView = (RecyclerView)findViewById(R.id.recyclerViewTaskMainActivity);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         taskDisplayRecyclerView.setLayoutManager(layoutManager);
-        taskList.add(new Task("Homework", "finish lab work for each class", State.In_progress, new Date()));
-
-        taskMasterDatabase.taskDao().insert(taskList.get(0));
-
 
         taskListRecyclerViewAdapter = new TaskListRecyclerViewAdapter(taskList, this);
         taskDisplayRecyclerView.setAdapter(taskListRecyclerViewAdapter);
