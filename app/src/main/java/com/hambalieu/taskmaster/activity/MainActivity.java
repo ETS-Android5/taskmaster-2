@@ -65,6 +65,8 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         String userNickname = preferences.getString(SettingsActivity.USER_NICKNAME_TAG, "No Nickname");
         ((TextView)findViewById(R.id.textViewDisplayUserNicknameMainActivity)).setText(getString(R.string.nickname, userNickname));
+        taskList = taskMasterDatabase.taskDao().findAll();
+        taskListRecyclerView();
 
     }
 
