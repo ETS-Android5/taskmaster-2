@@ -127,7 +127,7 @@
 
 ##### Documentation 
 
-<img src="/images/lab29/homepagelab29.png" width="450">
+<img src="/images/lab29/hompagelab29.png" width="450">
 <img src="/images/lab29/taskdetailpage.png" width="450">
 <img src="/images/lab29/addtaskpage.png" width="450">
 <img src="/images/lab29/AddTaskSubmittedpage.png" width="450">
