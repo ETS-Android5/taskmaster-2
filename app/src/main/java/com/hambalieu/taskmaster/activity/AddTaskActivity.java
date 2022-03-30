@@ -1,7 +1,7 @@
 package com.hambalieu.taskmaster.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Room;
+
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -14,7 +14,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.hambalieu.taskmaster.R;
-import com.hambalieu.taskmaster.database.TaskmasterDatabase;
 import com.hambalieu.taskmaster.model.State;
 import com.hambalieu.taskmaster.model.Task;
 
@@ -23,20 +22,12 @@ import java.util.Date;
 public class AddTaskActivity extends AppCompatActivity {
 
 
-    TaskmasterDatabase taskMasterDatabase;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_task);
-        taskMasterDatabase = Room.databaseBuilder(
-                getApplicationContext(),
-                TaskmasterDatabase.class,
-                "task_master_database")
-                .allowMainThreadQueries() // don't do this in a real app
-                .build();
-
-
         submittedTaskButton();
 
     }
@@ -59,7 +50,7 @@ public class AddTaskActivity extends AppCompatActivity {
                             State.fromString(taskStateSpinner.getSelectedItem().toString()), new Date());
 
                     ((TextView) findViewById(R.id.textViewSubmittedOnAddTaskActivity)).setText("Submitted");
-                    taskMasterDatabase.taskDao().insert(newTask);
+//                    taskMasterDatabase.taskDao().insert(newTask);
 
                 }
             });

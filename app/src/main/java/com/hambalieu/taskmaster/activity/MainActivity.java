@@ -3,7 +3,6 @@ package com.hambalieu.taskmaster.activity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.room.Room;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -17,7 +16,7 @@ import android.widget.TextView;
 
 import com.hambalieu.taskmaster.R;
 import com.hambalieu.taskmaster.adapter.TaskListRecyclerViewAdapter;
-import com.hambalieu.taskmaster.database.TaskmasterDatabase;
+
 import com.hambalieu.taskmaster.model.Task;
 import com.hambalieu.taskmaster.model.State;
 
@@ -32,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
     public static final String USER_USERNAME_TAG = "userUsername";
     SharedPreferences preferences;
     TaskListRecyclerViewAdapter taskListRecyclerViewAdapter;
-    TaskmasterDatabase taskMasterDatabase;
     List<Task> taskList = null;
 
 
@@ -43,15 +41,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
-
-        taskMasterDatabase = Room.databaseBuilder(
-                getApplicationContext(),
-                TaskmasterDatabase.class,
-                "task_master_database")
-                .allowMainThreadQueries() // don't do this in a real app
-                .build();
-
-        taskList= taskMasterDatabase.taskDao().findAll();
+        // TODO: Change this to a Dynamo / GraphQl query
+//        taskList= taskMasterDatabase.taskDao().findAll();
+        taskList = new ArrayList<>();
+        taskList.add(new Task("Grocery", "I did my groceries for the week.", State.Complete,new Date()));
 
         buttonToGoAddTaskPage();
         buttonToGoAllTaskPage();
@@ -65,7 +58,8 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         String userNickname = preferences.getString(SettingsActivity.USER_NICKNAME_TAG, "No Nickname");
         ((TextView)findViewById(R.id.textViewDisplayUserNicknameMainActivity)).setText(getString(R.string.nickname, userNickname));
-        taskList = taskMasterDatabase.taskDao().findAll();
+        // TODO: Change this to a Dynamo / GraphQl query
+//        taskList = taskMasterDatabase.taskDao().findAll();
         taskListRecyclerView();
 
     }
