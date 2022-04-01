@@ -135,6 +135,7 @@
 
 # Lab 31 Espresso and Polish
 
+
 ## Feature Tasks
 
 
@@ -150,6 +151,7 @@
 ## Polish
 
 - Complete any remaining feature tasks from previous days’ labs.
+
 
 ## Documentation
 

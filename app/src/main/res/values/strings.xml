@@ -23,6 +23,7 @@
 <!--    <string name="hello_blank_fragment">Hello blank fragment</string>-->
     <string name="blank_task_name">Blank Task Name</string>
     <string name="no_task">No Task</string>
+    <string name="task_state">Task State</string>
 
 
 </resources>
