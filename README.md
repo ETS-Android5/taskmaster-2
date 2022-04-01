@@ -133,6 +133,25 @@
 <img src="/images/lab29/AddTaskSubmittedpage.png" width="450">
 
 
+# Lab 31 Espresso and Polish
+
+## Feature Tasks
 
 
+## Espresso Testing
 
+- Add Espresso to your application, and use it to test basic functionality of the main components of your application. For example:
+
+- assert that important UI elements are displayed on the page
+- tap on a task, and assert that the resulting activity displays the name of that task
+- edit the user’s username, and assert that it says the correct thing on the homepage
+
+
+## Polish
+
+- Complete any remaining feature tasks from previous days’ labs.
+
+## Documentation
+
+<img src="/images/lab31/espressoNicknameTest.png" width="450">
+<img src="/images/lab31/espressoTest1.png" width="450">
