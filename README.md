@@ -133,7 +133,9 @@
 <img src="/images/lab29/AddTaskSubmittedpage.png" width="450">
 
 
+# Lab 31 Espresso and Polish
 
+<<<<<<< HEAD
 
 
 
@@ -223,15 +225,17 @@
 ### Resources
 
 - Amplify Getting Started
+=======
+>>>>>>> 758b9e86f3fdf26d02751d1213d33e882951985c
 
 ## Feature Tasks
 
-### Tasks Are Cloudy
 
-- Using the `amplify add api` command, create a Task resource that replicates our existing Task schema. Update all references to the Task data to instead use AWS Amplify to access your data in DynamoDB instead of in Room.
+## Espresso Testing
 
-### Add Task Form
+- Add Espresso to your application, and use it to test basic functionality of the main components of your application. For example:
 
+<<<<<<< HEAD
 - Modify your Add Task form to save the data entered in as a Task to DynamoDB.
 
 ### Homepage
@@ -248,7 +252,19 @@
 - Ensure that all Espresso tests are still passing (since we haven't changed anything about the UI today, no new updates required).
 
 [APK build file](apk_builds/apk_lab32/app-debug.apk)
+=======
+- assert that important UI elements are displayed on the page
+- tap on a task, and assert that the resulting activity displays the name of that task
+- edit the user’s username, and assert that it says the correct thing on the homepage
+>>>>>>> 758b9e86f3fdf26d02751d1213d33e882951985c
 
 
+## Polish
+
+- Complete any remaining feature tasks from previous days’ labs.
 
 
+## Documentation
+
+<img src="/images/lab31/espressoNicknameTest.png" width="450">
+<img src="/images/lab31/espressoTest1.png" width="450">
