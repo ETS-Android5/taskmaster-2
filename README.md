@@ -134,6 +134,82 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # Lab 32: Integrating AWS for Cloud Data Storage
 
 ## Overview
@@ -164,7 +240,8 @@
 
 ### Documentation
 
-- Update your daily change log with today's changes.
+<img src="/images/lab32/tasktitleTest.png" width="450">
+<img src="/images/lab32/nicknametest.png" width="450">
 
 ### Testing
 
