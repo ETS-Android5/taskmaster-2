@@ -1,0 +1,25 @@
+
+type Task @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  title: String!
+  description: String
+  dateCreated: AWSDateTime
+  State: State
+  teamId: ID! @index(name: "byTeam", sortKeyFields: ["title"])
+  team: Team @belongsTo(fields: ["teamId"])
+}
+
+enum State {
+    New
+    Assigned
+    In_progress
+    Complete
+}
+
+
+type Team @model @auth(rules: [{allow: public}])
+{
+    id: ID!
+    teamName: String!
+    tasks: [Task] @hasMany(indexName: "byTeam", fields: ["id"])
+}

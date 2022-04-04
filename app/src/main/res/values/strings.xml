@@ -24,6 +24,8 @@
     <string name="blank_task_name">Blank Task Name</string>
     <string name="no_task">No Task</string>
     <string name="task_state">Task State</string>
+    <string name="teams">Teams</string>
+    <string name="team_names">Team Names</string>
 
 
 </resources>
