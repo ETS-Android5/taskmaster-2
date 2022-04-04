@@ -201,8 +201,8 @@
 
 ## Documentation
 
-<img src="/images/lab33/homepageImage" width="450">
-<img src="/images/lab33/settingpageImage" width="450">
+<img src="/images/lab33/homepageImage.png" width="450">
+<img src="/images/lab33/settingpageImage.png" width="450">
 
 
 [APK build file](apk_builds/apk_lab33/app-debug.apk)   
