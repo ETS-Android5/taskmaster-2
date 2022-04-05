@@ -47,28 +47,29 @@ public class TaskListRecyclerViewAdapter extends RecyclerView.Adapter<TaskListRe
 
     @Override
     public void onBindViewHolder(@NonNull TaskListRecyclerViewAdapter.TaskListViewHolder holder, int position) {
-        TextView taskTextViewFragment = (TextView) holder.itemView.findViewById(R.id.textViewTaskFragment);
+        TextView taskTextViewFragment = holder.itemView.findViewById(R.id.textViewTaskFragment);
         Task task = taskList.get(position);
-        DateFormat dateCreatedFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault());
-
-        dateCreatedFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+        DateFormat dateCreatedInputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault());
+        dateCreatedInputFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+        DateFormat dateCreatedOutputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        dateCreatedOutputFormat.setTimeZone(TimeZone.getDefault());
         String dateCreatedString = "";
 
         try {
             {
-                Date dateCreatedJavaDate = dateCreatedFormat.parse(task.getDateCreated().format());
+                Date dateCreatedJavaDate = dateCreatedInputFormat.parse(task.getDateCreated().format());
                 if (dateCreatedJavaDate != null)
-                    dateCreatedString = dateCreatedFormat.format(dateCreatedJavaDate);
+                    dateCreatedString = dateCreatedOutputFormat.format(dateCreatedJavaDate);
             }
         } catch (ParseException pe) {
             Log.e(TAG, "Error converting product date to String: " + pe.getMessage(), pe);
         }
 
         taskTextViewFragment.setText(position + ". " + task.getTitle()
-                + "\n" + task.getDescription()
-                + "\n" + dateCreatedString
-                + "\n" + task.getTeam().getTeamName()
-                + "\n" + task.getState().toString());
+                + "\nDescription: " + task.getDescription()
+                + "\nDate Created: " + dateCreatedString
+                + "\nTeam Name: " + task.getTeam().getTeamName()
+                + "\nTask State: " + task.getState().toString());
 
         View taskViewHolder = holder.itemView;
         taskViewHolder.setOnClickListener(view -> {

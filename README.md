@@ -205,4 +205,30 @@
 <img src="/images/lab33/settingpageImage.png" width="450">
 
 
-[APK build file](apk_builds/apk_lab33/app-debug.apk)   
+[APK build file](apk_builds/apk_lab33/app-debug.apk) 
+
+
+# Lab 36: Adding Cognito
+
+## Feature Tasks
+
+### User Login
+
+- Add Cognito to your Amplify setup. Add in user login and sign up flows to your application, using Cognito’s pre-built UI as appropriate. Display the logged in user’s username somewhere relevant in your app.
+
+### User Logout
+
+- Allow users to log out of your application.
+
+
+### Documentation
+
+- Started Working on lab at 8pm and completed at 11pm on April 4th 2022
+
+<img src="/images/lab36/homeNotLogInpage.png" width="450">
+<img src="/images/lab36/logInSingUpPage.png" width="450">
+<img src="/images/lab36/loggedInImage.png" width="450">
+
+
+
+[APK build file](apk_builds/apk_lab36/app-debug.apk) 

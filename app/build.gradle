@@ -42,4 +42,5 @@ dependencies {
     //AWS amplify dependencies
     implementation 'com.amplifyframework:aws-api:1.33.0'
     implementation 'com.amplifyframework:aws-datastore:1.33.0'
+    implementation 'com.amplifyframework:aws-auth-cognito:1.33.0'
 }

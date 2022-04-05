@@ -3,7 +3,7 @@ package com.hambalieu.taskmaster.activity;
 import androidx.appcompat.app.AppCompatActivity;
 
 
-import android.content.Intent;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ArrayAdapter;
@@ -53,7 +53,7 @@ public class AddTaskActivity extends AppCompatActivity
 
     public void setUpTeamSpinners()
     {
-        teamSpinner = (Spinner) findViewById(R.id.addTaskTeamspinner);
+        teamSpinner = findViewById(R.id.addTaskTeamspinner);
 
         Amplify.API.query(
                 ModelQuery.list(Team.class),
@@ -72,12 +72,10 @@ public class AddTaskActivity extends AppCompatActivity
                     teamsFuture.complete(teams);
 
                     runOnUiThread(() ->
-                    {
-                        teamSpinner.setAdapter(new ArrayAdapter<>(
-                                this,
-                                android.R.layout.simple_spinner_item,
-                                teamNames));
-                    });
+                            teamSpinner.setAdapter(new ArrayAdapter<>(
+                                    this,
+                                    android.R.layout.simple_spinner_item,
+                                    teamNames)));
                 },
                 failure -> {
                     teamsFuture.complete(null);
@@ -86,7 +84,7 @@ public class AddTaskActivity extends AppCompatActivity
         );
 
 
-        taskStateSpinner = (Spinner) findViewById(R.id.spinnerTaskStateAddTaskActivity);
+        taskStateSpinner = findViewById(R.id.spinnerTaskStateAddTaskActivity);
         taskStateSpinner.setAdapter(new ArrayAdapter<>(
                 this,
                 android.R.layout.simple_spinner_item,
@@ -96,13 +94,13 @@ public class AddTaskActivity extends AppCompatActivity
     }
 
     public void submittedTaskButton() {
-        Button submitButton = (Button) findViewById(R.id.buttonAddTaskOnAddTaskActivity);
+        Button submitButton =  findViewById(R.id.buttonAddTaskOnAddTaskActivity);
 
         submitButton.setOnClickListener(view -> {
 
             String title = ((EditText) findViewById(R.id.editTextSingleTaskInputOnAddTaskActivity)).getText().toString();
             String description = ((EditText) findViewById(R.id.editTextInputDescriptionOnAddTaskActivity)).getText().toString();
-            String currentDateString = com.amazonaws.util.DateUtils.formatISO8601Date(new Date());
+//            String currentDateString = com.amazonaws.util.DateUtils.formatISO8601Date(new Date());
             String selectedNameFromSpinner = teamSpinner.getSelectedItem().toString();
 
             List<Team> teams = null;
@@ -124,7 +122,8 @@ public class AddTaskActivity extends AppCompatActivity
             Task newTask = Task.builder()
                     .title(title)
                     .description(description)
-                    .dateCreated(new Temporal.DateTime(currentDateString))
+//                    .dateCreated(new Temporal.DateTime(currentDateString))
+                    .dateCreated(new Temporal.DateTime(new Date(),0))
                     .state((State) taskStateSpinner.getSelectedItem())
                     .team(selectedTeam)
                     .build();
