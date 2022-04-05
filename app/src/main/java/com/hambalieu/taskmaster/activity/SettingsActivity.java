@@ -2,12 +2,11 @@ package com.hambalieu.taskmaster.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
+
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,13 +19,11 @@ import com.google.android.material.snackbar.Snackbar;
 import com.hambalieu.taskmaster.R;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Predicate;
+
 
 
 public class SettingsActivity extends AppCompatActivity {
     SharedPreferences preferences;
-//    SharedPreferences teamPreferences;
     public String TAG = "SettingsActivity";
     public static final String USER_NICKNAME_TAG = "userNickname";
     public static final String CHOOSE_TEAM_TAG = "Choose Team";
@@ -53,7 +50,7 @@ public class SettingsActivity extends AppCompatActivity {
         String userNickname = preferences.getString(USER_NICKNAME_TAG, "");
         if (!userNickname.isEmpty())
         {
-            EditText userNicknameEditText = (EditText) findViewById(R.id.editTextNicknameInputSettingsActivity);
+            EditText userNicknameEditText =findViewById(R.id.editTextNicknameInputSettingsActivity);
             userNicknameEditText.setText(userNickname);
         }
 //        teamPreferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -86,40 +83,34 @@ public class SettingsActivity extends AppCompatActivity {
                     }
 
                     runOnUiThread(() ->
-                    {
-                        teamSettingsPageSpinner.setAdapter(new ArrayAdapter<>(
-                                this,
-                                android.R.layout.simple_spinner_item,
-                                teamNames));
-                    });
+                            teamSettingsPageSpinner.setAdapter(new ArrayAdapter<>(
+                                    this,
+                                    android.R.layout.simple_spinner_item,
+                                    teamNames)));
                 },
-                failure -> {
-                    Log.i(TAG, "Did not add team names successfully!");
-                }
+                failure -> Log.i(TAG, "Did not add team names successfully!")
         );
 
     }
 
     public void saveUserNickname()
     {
-        Button saveNicknameButton = (Button) findViewById(R.id.buttonSaveNicknameSettingsActivity);
-        saveNicknameButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                SharedPreferences.Editor preferenceEditor = preferences.edit();
-                EditText userNicknameEditText = (EditText) findViewById(R.id.editTextNicknameInputSettingsActivity);
-                String inputUserNickname = userNicknameEditText.getText().toString();
-                preferenceEditor.putString(USER_NICKNAME_TAG, inputUserNickname);
+        Button saveNicknameButton = findViewById(R.id.buttonSaveNicknameSettingsActivity);
+        saveNicknameButton.setOnClickListener(view -> {
+            SharedPreferences.Editor preferenceEditor = preferences.edit();
+            EditText userNicknameEditText =  findViewById(R.id.editTextNicknameInputSettingsActivity);
+            String inputUserNickname = userNicknameEditText.getText().toString();
+            preferenceEditor.putString(USER_NICKNAME_TAG, inputUserNickname);
 
-                String teamNameSelected = teamSettingsPageSpinner.getSelectedItem().toString();
-                preferenceEditor.putString(CHOOSE_TEAM_TAG, teamNameSelected);
+            String teamNameSelected = teamSettingsPageSpinner.getSelectedItem().toString();
+            preferenceEditor.putString(CHOOSE_TEAM_TAG, teamNameSelected);
 
-                preferenceEditor.apply();
+            preferenceEditor.apply();
 
-                Snackbar.make(findViewById(R.id.textViewSavedSettingsActivity), "Saved", Snackbar.LENGTH_LONG).show();
+            Snackbar.make(findViewById(R.id.textViewSavedSettingsActivity), "Saved", Snackbar.LENGTH_LONG).show();
 //                Intent goToHomePage = new Intent(SettingsActivity.this , MainActivity.class );
 //                startActivity(goToHomePage);
 
-            }
         });
     }
 
