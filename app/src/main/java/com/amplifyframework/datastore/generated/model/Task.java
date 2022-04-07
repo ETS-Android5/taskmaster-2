@@ -32,12 +32,14 @@ public final class Task implements Model {
   public static final QueryField DESCRIPTION = field("Task", "description");
   public static final QueryField DATE_CREATED = field("Task", "dateCreated");
   public static final QueryField STATE = field("Task", "State");
+  public static final QueryField TASK_IMAGE_S3_KEY = field("Task", "taskImageS3Key");
   public static final QueryField TEAM = field("Task", "teamId");
   private final @ModelField(targetType="ID", isRequired = true) String id;
   private final @ModelField(targetType="String", isRequired = true) String title;
   private final @ModelField(targetType="String") String description;
   private final @ModelField(targetType="AWSDateTime") Temporal.DateTime dateCreated;
   private final @ModelField(targetType="State") State State;
+  private final @ModelField(targetType="String") String taskImageS3Key;
   private final @ModelField(targetType="Team") @BelongsTo(targetName = "teamId", type = Team.class) Team team;
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime createdAt;
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime updatedAt;
@@ -61,6 +63,10 @@ public final class Task implements Model {
       return State;
   }
   
+  public String getTaskImageS3Key() {
+      return taskImageS3Key;
+  }
+  
   public Team getTeam() {
       return team;
   }
@@ -73,12 +79,13 @@ public final class Task implements Model {
       return updatedAt;
   }
   
-  private Task(String id, String title, String description, Temporal.DateTime dateCreated, State State, Team team) {
+  private Task(String id, String title, String description, Temporal.DateTime dateCreated, State State, String taskImageS3Key, Team team) {
     this.id = id;
     this.title = title;
     this.description = description;
     this.dateCreated = dateCreated;
     this.State = State;
+    this.taskImageS3Key = taskImageS3Key;
     this.team = team;
   }
   
@@ -95,6 +102,7 @@ public final class Task implements Model {
               ObjectsCompat.equals(getDescription(), task.getDescription()) &&
               ObjectsCompat.equals(getDateCreated(), task.getDateCreated()) &&
               ObjectsCompat.equals(getState(), task.getState()) &&
+              ObjectsCompat.equals(getTaskImageS3Key(), task.getTaskImageS3Key()) &&
               ObjectsCompat.equals(getTeam(), task.getTeam()) &&
               ObjectsCompat.equals(getCreatedAt(), task.getCreatedAt()) &&
               ObjectsCompat.equals(getUpdatedAt(), task.getUpdatedAt());
@@ -109,6 +117,7 @@ public final class Task implements Model {
       .append(getDescription())
       .append(getDateCreated())
       .append(getState())
+      .append(getTaskImageS3Key())
       .append(getTeam())
       .append(getCreatedAt())
       .append(getUpdatedAt())
@@ -125,6 +134,7 @@ public final class Task implements Model {
       .append("description=" + String.valueOf(getDescription()) + ", ")
       .append("dateCreated=" + String.valueOf(getDateCreated()) + ", ")
       .append("State=" + String.valueOf(getState()) + ", ")
+      .append("taskImageS3Key=" + String.valueOf(getTaskImageS3Key()) + ", ")
       .append("team=" + String.valueOf(getTeam()) + ", ")
       .append("createdAt=" + String.valueOf(getCreatedAt()) + ", ")
       .append("updatedAt=" + String.valueOf(getUpdatedAt()))
@@ -151,6 +161,7 @@ public final class Task implements Model {
       null,
       null,
       null,
+      null,
       null
     );
   }
@@ -161,6 +172,7 @@ public final class Task implements Model {
       description,
       dateCreated,
       State,
+      taskImageS3Key,
       team);
   }
   public interface TitleStep {
@@ -174,6 +186,7 @@ public final class Task implements Model {
     BuildStep description(String description);
     BuildStep dateCreated(Temporal.DateTime dateCreated);
     BuildStep state(State state);
+    BuildStep taskImageS3Key(String taskImageS3Key);
     BuildStep team(Team team);
   }
   
@@ -184,6 +197,7 @@ public final class Task implements Model {
     private String description;
     private Temporal.DateTime dateCreated;
     private State State;
+    private String taskImageS3Key;
     private Team team;
     @Override
      public Task build() {
@@ -195,6 +209,7 @@ public final class Task implements Model {
           description,
           dateCreated,
           State,
+          taskImageS3Key,
           team);
     }
     
@@ -224,6 +239,12 @@ public final class Task implements Model {
     }
     
     @Override
+     public BuildStep taskImageS3Key(String taskImageS3Key) {
+        this.taskImageS3Key = taskImageS3Key;
+        return this;
+    }
+    
+    @Override
      public BuildStep team(Team team) {
         this.team = team;
         return this;
@@ -241,12 +262,13 @@ public final class Task implements Model {
   
 
   public final class CopyOfBuilder extends Builder {
-    private CopyOfBuilder(String id, String title, String description, Temporal.DateTime dateCreated, State state, Team team) {
+    private CopyOfBuilder(String id, String title, String description, Temporal.DateTime dateCreated, State state, String taskImageS3Key, Team team) {
       super.id(id);
       super.title(title)
         .description(description)
         .dateCreated(dateCreated)
         .state(state)
+        .taskImageS3Key(taskImageS3Key)
         .team(team);
     }
     
@@ -268,6 +290,11 @@ public final class Task implements Model {
     @Override
      public CopyOfBuilder state(State state) {
       return (CopyOfBuilder) super.state(state);
+    }
+    
+    @Override
+     public CopyOfBuilder taskImageS3Key(String taskImageS3Key) {
+      return (CopyOfBuilder) super.taskImageS3Key(taskImageS3Key);
     }
     
     @Override

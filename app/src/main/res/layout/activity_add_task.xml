@@ -83,14 +83,13 @@
         android:id="@+id/buttonAddTaskOnAddTaskActivity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
         android:layout_marginBottom="88dp"
         android:text="@string/add_task"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.079"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addTaskTeamspinner"
-        app:layout_constraintVertical_bias="0.201" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonAddImageOnAddTaskActivity"
+        app:layout_constraintVertical_bias="0.542" />
 
     <TextView
         android:id="@+id/textViewTotalTaskOnAddTaskActivity"
@@ -110,11 +109,11 @@
         android:id="@+id/textViewSubmittedOnAddTaskActivity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="72dp"
+        android:layout_marginBottom="48dp"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.472"
+        app:layout_constraintHorizontal_bias="0.445"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Spinner
@@ -168,5 +167,25 @@
         app:layout_constraintHorizontal_bias="0.087"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinnerTaskStateAddTaskActivity" />
+
+    <Button
+        android:id="@+id/buttonAddImageOnAddTaskActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/add_image"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addTaskTeamspinner" />
+
+    <Button
+        android:id="@+id/buttonDeleteImageOnAddTaskActiviy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="84dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/delete_image"
+        app:layout_constraintStart_toEndOf="@+id/buttonAddImageOnAddTaskActivity"
+        app:layout_constraintTop_toBottomOf="@+id/addTaskTeamspinner" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

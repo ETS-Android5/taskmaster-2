@@ -6,6 +6,7 @@ query GetTask($id: ID!) {
     description
     dateCreated
     State
+    taskImageS3Key
     teamId
     team {
       id
@@ -32,6 +33,7 @@ query ListTasks(
       description
       dateCreated
       State
+      taskImageS3Key
       teamId
       team {
         id
@@ -56,6 +58,7 @@ query GetTeam($id: ID!) {
         description
         dateCreated
         State
+        taskImageS3Key
         teamId
         createdAt
         updatedAt

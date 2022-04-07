@@ -32,6 +32,10 @@ import com.hambalieu.taskmaster.R;
 import com.hambalieu.taskmaster.adapter.TaskListRecyclerViewAdapter;
 
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import java.util.List;
@@ -39,6 +43,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     public final String TAG = "MainActivity";
+    public static final String TASK_ID_TAG = "Task ID Tag";
     public static final String TASK_DETAIL_TITLE_TASK_TAG = "Task Detail Title";
     public static final String TASK_BODY_TAG = "Task Detail Body";
     public static final String TASK_STATE_TAG = "Task Detail State";
@@ -54,8 +59,39 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        init();
 
+        // Manually create an S3 file for testing
+
+//        String emptyFilename = "emptyTestFilename";
+//        File emptyFile = new File(getApplicationContext().getFilesDir(), "emptyTestFileName");
+//
+//        try
+//        {
+//            BufferedWriter emptyFileBufferedWriter = new BufferedWriter(new FileWriter(emptyFile));
+//            emptyFileBufferedWriter.append("Some test text here\n Another line of test test");
+//            emptyFileBufferedWriter.close(); // make sure to do this or the text may not be saved!
+//        } catch(IOException ioe)
+//        {
+//            Log.e(TAG, "could not write file locally with fileman");
+//        }
+//
+//        String emptyFileS3Key = "someFileOnS3";
+//
+//        Amplify.Storage.uploadFile(
+//                emptyFileS3Key,
+//                emptyFile,
+//                success ->
+//                {
+//                    Log.i(TAG, "S3 upload succeeded! Key is: " + success.getKey());
+//                },
+//                failure ->
+//                {
+//                    Log.i(TAG, "S3 upload failed! " + failure.getMessage());
+//                }
+//        );
+
+
+        init();
         buttonToGoAddTaskPage();
         buttonToGoAllTaskPage();
         buttonToGoSettingsPage();
@@ -279,8 +315,7 @@ public class MainActivity extends AppCompatActivity {
                         Log.i(TAG, "Logout failed: " + failure.toString());
                         runOnUiThread(() ->
                         {
-                            // TODO: None of the these Toasts in runOnUiThread() seem to work!
-                            Toast.makeText(MainActivity.this, "Log out failed!", Toast.LENGTH_SHORT);
+                            Toast.makeText(MainActivity.this, "Log out failed!", Toast.LENGTH_SHORT).show();
                         });
                     }
             );
