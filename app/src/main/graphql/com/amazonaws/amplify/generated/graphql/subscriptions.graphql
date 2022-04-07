@@ -6,6 +6,7 @@ subscription OnCreateTask {
     description
     dateCreated
     State
+    taskImageS3Key
     teamId
     team {
       id
@@ -27,6 +28,7 @@ subscription OnUpdateTask {
     description
     dateCreated
     State
+    taskImageS3Key
     teamId
     team {
       id
@@ -48,6 +50,7 @@ subscription OnDeleteTask {
     description
     dateCreated
     State
+    taskImageS3Key
     teamId
     team {
       id
@@ -73,6 +76,7 @@ subscription OnCreateTeam {
         description
         dateCreated
         State
+        taskImageS3Key
         teamId
         createdAt
         updatedAt
@@ -94,6 +98,7 @@ subscription OnUpdateTeam {
         description
         dateCreated
         State
+        taskImageS3Key
         teamId
         createdAt
         updatedAt
@@ -115,6 +120,7 @@ subscription OnDeleteTeam {
         description
         dateCreated
         State
+        taskImageS3Key
         teamId
         createdAt
         updatedAt

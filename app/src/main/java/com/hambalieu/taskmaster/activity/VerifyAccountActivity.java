@@ -49,7 +49,7 @@ public class VerifyAccountActivity extends AppCompatActivity
                         Log.i(TAG, "Verification failed with username: " + "ed@codefellows.com" + " with this message: " + bad.toString());
                         runOnUiThread(() ->
                                 {
-                                    Toast.makeText(VerifyAccountActivity.this, "Verify account failed!", Toast.LENGTH_SHORT);
+                                    Toast.makeText(VerifyAccountActivity.this, "Verify account failed!", Toast.LENGTH_SHORT).show();
                                 }
                         );
                     }
