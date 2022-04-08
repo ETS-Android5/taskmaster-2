@@ -36,6 +36,12 @@
     <string name="log_out">log out</string>
     <string name="add_image">Add Image</string>
     <string name="delete_image">Delete Image</string>
+    <string name="image">Image</string>
+    <string name="image_to_upload">image to upload</string>
+    <string name="image_on_task_detail_page">image on task detail page</string>
+
+    <string name="imagetaskdtail">imagetaskdtail</string>
+    <string name="imagetaskdetailpage">ImageTaskDetailPage</string>
 
 
 </resources>

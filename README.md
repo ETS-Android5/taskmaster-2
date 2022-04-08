@@ -232,3 +232,31 @@
 
 
 [APK build file](apk_builds/apk_lab36/app-debug.apk) 
+
+
+
+# Lab 37: Amazon Simple Storage Service (S3) 
+
+## Feature Tasks
+
+### Uploads
+
+- On the “Add a Task” activity, users are allowed to optionally select a file to attach to that task. 
+  
+- If a user attaches a file to a task, the file is then uploaded to Amazon Simple Storage Service (S3), and the file is associated with that task.
+
+### Displaying Files
+
+- On the Task detail activity, if there is a file that is an image associated with a particular Task, that image is displayed within that activity.
+
+### Documentation
+
+- Started Working on the lab at 11pm and completed at 4am on April 6th 2022
+
+<img src="/images/lab37/addtask.png" width="450">
+<img src="/images/lab37/taskdetailpage.png" width="450">
+<img src="/images/lab37/s3images.png" width="450">
+<img src="/images/lab37/Inkeddynamodb.jpg" width="450">
+
+
+[APK build file](apk_builds/apk_lab37/app-debug.apk) 
