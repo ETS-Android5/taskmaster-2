@@ -69,7 +69,8 @@ public class TaskListRecyclerViewAdapter extends RecyclerView.Adapter<TaskListRe
                 + "\nDescription: " + task.getDescription()
                 + "\nDate Created: " + dateCreatedString
                 + "\nTeam Name: " + task.getTeam().getTeamName()
-                + "\nTask State: " + task.getState().toString());
+                + "\nTask State: " + task.getState().toString()
+                +"\nTask Image: " + task.getTaskImageS3Key().toString());
 
         View taskViewHolder = holder.itemView;
         taskViewHolder.setOnClickListener(view -> {
@@ -77,6 +78,7 @@ public class TaskListRecyclerViewAdapter extends RecyclerView.Adapter<TaskListRe
             goToTaskDetailPage.putExtra(MainActivity.TASK_DETAIL_TITLE_TASK_TAG, task.getTitle());
             goToTaskDetailPage.putExtra(MainActivity.TASK_BODY_TAG, task.getDescription());
             goToTaskDetailPage.putExtra(MainActivity.TASK_STATE_TAG, task.getState().toString());
+            goToTaskDetailPage.putExtra(MainActivity.TASK_IMAGE_TAG, task.getTaskImageS3Key().toString());
             callingActivity.startActivity(goToTaskDetailPage);
         });
     }

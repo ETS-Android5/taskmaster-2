@@ -11,7 +11,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="144dp"
+        android:layout_marginTop="96dp"
         android:layout_marginEnd="32dp"
         android:autofillHints=""
         android:ems="10"
@@ -47,11 +47,11 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="16dp"
         android:text="@string/add_task_"
         android:textSize="28sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.442"
+        app:layout_constraintHorizontal_bias="0.435"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -64,7 +64,7 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/editTextSingleTaskInputOnAddTaskActivity"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.098"
+        app:layout_constraintHorizontal_bias="0.101"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
@@ -83,13 +83,11 @@
         android:id="@+id/buttonAddTaskOnAddTaskActivity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginBottom="88dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="36dp"
         android:text="@string/add_task"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonAddImageOnAddTaskActivity"
-        app:layout_constraintVertical_bias="0.542" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonAddImageOnAddTaskActivity" />
 
     <TextView
         android:id="@+id/textViewTotalTaskOnAddTaskActivity"
@@ -109,7 +107,7 @@
         android:id="@+id/textViewSubmittedOnAddTaskActivity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="48dp"
+        android:layout_marginBottom="24dp"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -121,7 +119,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="28dp"
         android:layout_marginEnd="24dp"
         android:contentDescription="@string/task_state"
         android:minHeight="48dp"
@@ -135,12 +133,12 @@
         android:id="@+id/textViewTaskSpinnerTittleAddTaskActivity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="4dp"
         android:text="@string/task_state"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/spinnerTaskStateAddTaskActivity"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.113"
+        app:layout_constraintHorizontal_bias="0.094"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Spinner
@@ -160,11 +158,11 @@
         android:id="@+id/textViewTeamList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="4dp"
         android:text="@string/teams"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.087"
+        app:layout_constraintHorizontal_bias="0.094"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinnerTaskStateAddTaskActivity" />
 
@@ -172,20 +170,44 @@
         android:id="@+id/buttonAddImageOnAddTaskActivity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="76dp"
         android:text="@string/add_image"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewImageAddTaskActivity" />
+
+    <Button
+        android:id="@+id/buttonDeleteImageOnAddTaskActiviyPage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="64dp"
+        android:text="@string/delete_image"
+        app:layout_constraintStart_toEndOf="@+id/buttonAddImageOnAddTaskActivity"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewImageAddTaskActivity" />
+
+    <TextView
+        android:id="@+id/textViewImageAddTaskActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="36dp"
+        android:text="@string/image"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/addTaskTeamspinner" />
 
-    <Button
-        android:id="@+id/buttonDeleteImageOnAddTaskActiviy"
+    <ImageView
+        android:id="@+id/imageViewImageAddTaskActivity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="84dp"
-        android:layout_marginTop="20dp"
-        android:text="@string/delete_image"
-        app:layout_constraintStart_toEndOf="@+id/buttonAddImageOnAddTaskActivity"
-        app:layout_constraintTop_toBottomOf="@+id/addTaskTeamspinner" />
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="60dp"
+        android:contentDescription="@string/image_to_upload"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.955"
+        app:layout_constraintStart_toEndOf="@+id/textViewImageAddTaskActivity"
+        app:layout_constraintTop_toBottomOf="@+id/addTaskTeamspinner"
+        tools:ignore="ImageContrastCheck"
+        tools:srcCompat="@tools:sample/avatars" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

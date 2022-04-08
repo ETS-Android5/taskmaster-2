@@ -3,23 +3,30 @@ package com.hambalieu.taskmaster.activity;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import android.util.Log;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.amplifyframework.api.graphql.model.ModelMutation;
+import com.amplifyframework.api.graphql.model.ModelQuery;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.Task;
 import com.hambalieu.taskmaster.R;
+
+import java.io.File;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 
 public class TaskDetailActivity extends AppCompatActivity {
 
 //    SharedPreferences preferences;
     public static final String TAG = "TaskDetailActivity";
-    private final Task taskToDelete = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,16 +36,22 @@ public class TaskDetailActivity extends AppCompatActivity {
         String taskTitle = null;
         String taskBody = null;
         String taskState = null;
+        String imageS3Key = "";
 
         if(callingIntent != null)
         {
             taskTitle = callingIntent.getStringExtra(MainActivity.TASK_DETAIL_TITLE_TASK_TAG);
             taskBody = callingIntent.getStringExtra(MainActivity.TASK_BODY_TAG);
             taskState = callingIntent.getStringExtra(MainActivity.TASK_STATE_TAG);
+            imageS3Key = callingIntent.getStringExtra(MainActivity.TASK_IMAGE_TAG);
+
+
+
         }
         TextView taskDetailTextView = findViewById(R.id.textViewTaskTitleTaskDetailActivity);
         TextView taskDetailbodyTextView = findViewById(R.id.textViewBodyOnTaskDetailActivity);
         TextView taskDetailStateTextView =  findViewById(R.id.textViewStateOnTaskDetailActivity);
+
         if(taskTitle != null)
         {
             taskDetailTextView.setText(taskTitle);
@@ -51,29 +64,34 @@ public class TaskDetailActivity extends AppCompatActivity {
 
         taskDetailbodyTextView.setText(taskBody);
         taskDetailStateTextView.setText(taskState);
-        setUpDeleteButton();
-    }
 
-
-    private void setUpDeleteButton()
-    {
-        Button deleteButton = findViewById(R.id.deleteTaskButton);
-        deleteButton.setOnClickListener(v ->
-        {
-            assert false;
-            Amplify.API.mutate(
-                    ModelMutation.delete(taskToDelete),
-                    successResponse ->
-                    {
-                        Log.i(TAG, "TaskDetailActivity.onCreate(): deleted a task successfully");
-
-                        Intent goToTaskListActivity = new Intent(TaskDetailActivity.this, MainActivity.class);
-                        startActivity(goToTaskListActivity);
+        if (imageS3Key != null && !imageS3Key.isEmpty()){
+            String finalImageS3Key = imageS3Key;
+            Amplify.Storage.downloadFile(
+                    imageS3Key,
+                    new File(getApplication().getFilesDir(),imageS3Key),
+                    success -> {
+                        ImageView viewTaskImageUpload = findViewById(R.id.imageViewImageAddTaskActivity);
+                        viewTaskImageUpload.setImageBitmap(BitmapFactory.decodeFile(success.getFile().getPath()));
                     },
-                    failureResponse -> Log.i(TAG, "TaskDetailActivity.onCreate(): failed with this response: " + failureResponse)
+                    failure -> {
+                        Log.e(TAG, "Unable to get image from s3 for: " + finalImageS3Key);
+                    }
             );
-        });
+        }
+
+
+
+
     }
+
+
+
+
+
+
+
+
 
 
 

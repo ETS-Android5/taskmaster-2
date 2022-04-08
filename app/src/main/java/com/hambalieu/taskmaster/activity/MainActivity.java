@@ -42,11 +42,15 @@ import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
+    public static final String TASK_ID_TAG = "Task Id";
     public final String TAG = "MainActivity";
-    public static final String TASK_ID_TAG = "Task ID Tag";
+
     public static final String TASK_DETAIL_TITLE_TASK_TAG = "Task Detail Title";
     public static final String TASK_BODY_TAG = "Task Detail Body";
     public static final String TASK_STATE_TAG = "Task Detail State";
+    public static final String TASK_IMAGE_TAG = "TaskDetailActivity";
+
+
 
 //    public static final String USER_USERNAME_TAG = "userUsername";
 
