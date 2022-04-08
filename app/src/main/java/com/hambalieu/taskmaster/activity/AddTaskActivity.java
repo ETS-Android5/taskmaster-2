@@ -17,11 +17,13 @@ import android.os.Bundle;
 import android.provider.OpenableColumns;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.amplifyframework.api.graphql.model.ModelMutation;
 import com.amplifyframework.api.graphql.model.ModelQuery;
@@ -122,6 +124,8 @@ public class AddTaskActivity extends AppCompatActivity
             {
                 saveTask();
             });
+
+            submitButton.onEditorAction(EditorInfo.IME_ACTION_DONE);
         }
 
         private void saveTask ()
@@ -133,7 +137,8 @@ public class AddTaskActivity extends AppCompatActivity
 
 
             List<Team> teams = null;
-            try {
+            try
+            {
                 teams = teamsFuture.get();
             } catch (InterruptedException ie)
             {
@@ -160,12 +165,13 @@ public class AddTaskActivity extends AppCompatActivity
                     successResponse ->
                     {
                         Log.i(TAG, "AddTaskActivity.onCreate(): made a task successfully");
-                        Snackbar.make(findViewById(R.id.textViewSubmittedOnAddTaskActivity), "Task Saved!", Snackbar.LENGTH_SHORT).show();
+//                        Snackbar.make(findViewById(R.id.textViewSubmittedOnAddTaskActivity), "Task Saved!", Snackbar.LENGTH_SHORT).show();
 
                     },// success callback
                     failureResponse -> Log.i(TAG, "AddTaskActivity.onCreate(): failed with this response: " + failureResponse) // failure callback
-            );
+                     );
 
+                    Toast.makeText(AddTaskActivity.this, "Task Saved", Toast.LENGTH_SHORT).show();
 
         }
 
