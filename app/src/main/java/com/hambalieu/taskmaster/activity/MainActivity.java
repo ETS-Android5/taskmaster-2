@@ -32,10 +32,6 @@ import com.hambalieu.taskmaster.R;
 import com.hambalieu.taskmaster.adapter.TaskListRecyclerViewAdapter;
 
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import java.util.List;
@@ -64,36 +60,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Manually create an S3 file for testing
-
-//        String emptyFilename = "emptyTestFilename";
-//        File emptyFile = new File(getApplicationContext().getFilesDir(), "emptyTestFileName");
-//
-//        try
-//        {
-//            BufferedWriter emptyFileBufferedWriter = new BufferedWriter(new FileWriter(emptyFile));
-//            emptyFileBufferedWriter.append("Some test text here\n Another line of test test");
-//            emptyFileBufferedWriter.close(); // make sure to do this or the text may not be saved!
-//        } catch(IOException ioe)
-//        {
-//            Log.e(TAG, "could not write file locally with fileman");
-//        }
-//
-//        String emptyFileS3Key = "someFileOnS3";
-//
-//        Amplify.Storage.uploadFile(
-//                emptyFileS3Key,
-//                emptyFile,
-//                success ->
-//                {
-//                    Log.i(TAG, "S3 upload succeeded! Key is: " + success.getKey());
-//                },
-//                failure ->
-//                {
-//                    Log.i(TAG, "S3 upload failed! " + failure.getMessage());
-//                }
-//        );
-
 
         init();
         buttonToGoAddTaskPage();
@@ -105,64 +71,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
-//        preferences = PreferenceManager.getDefaultSharedPreferences(this);
-//        taskList = new ArrayList<>();
-//
-
-//
-//        String currentDateString = com.amazonaws.util.DateUtils.formatISO8601Date(new Date());
-//        com.amplifyframework.datastore.generated.model.Task testTask =
-//                com.amplifyframework.datastore.generated.model.Task.builder()
-//                    .title("Task name")
-//                    .description("May task for the day")
-//                    .dateCreated(new Temporal.DateTime(currentDateString))
-//                .state(com.amplifyframework.datastore.generated.model.State.In_progress)
-//                .build();
-//        Amplify.API.mutate(
-//                ModelMutation.create(testTask), //making a graph Ql request
-//                successResponse -> Log.i(TAG, "Main Activity.onCreate(): Made a Task successfully"),
-//                failureResponse -> Log.i(TAG, "Main Activity.onCreate(): failed with this response" + failureResponse)
-//
-//        );
-//        taskList.add(testTask);
-
-//
-//        Team team1 =
-//                Team.builder()
-//                    .teamName("Crud Depot")
-//                    .build();
-//        Amplify.API.mutate(
-//                ModelMutation.create(team1), //making a graph Ql request
-//                successResponse -> Log.i(TAG, "Main Activity.onCreate(): Made a team successfully"),
-//                failureResponse -> Log.i(TAG, "Main Activity.onCreate(): team failed with this response" + failureResponse)
-//
-//        );
-//
-//
-//        Team team2 =
-//                Team.builder()
-//                        .teamName("Hamshabb")
-//                        .build();
-//        Amplify.API.mutate(
-//                ModelMutation.create(team2), //making a graph Ql request
-//                successResponse -> Log.i(TAG, "Main Activity.onCreate(): Made a 2nd team successfully"),
-//                failureResponse -> Log.i(TAG, "Main Activity.onCreate(): 2nd team failed with this response" + failureResponse)
-//
-//        );
-//
-//        Team team3 =
-//                Team.builder()
-//                        .teamName("Crud Alchemy")
-//                        .build();
-//        Amplify.API.mutate(
-//                ModelMutation.create(team3), //making a graph Ql request
-//                successResponse -> Log.i(TAG, "Main Activity.onCreate(): Made a 3rd team successfully"),
-//                failureResponse -> Log.i(TAG, "Main Activity.onCreate(): 3rd team failed with this response" + failureResponse)
-//
-//        );
-//
-//
     }
 
     @Override
@@ -176,17 +84,17 @@ public class MainActivity extends AppCompatActivity {
         String username = "";
         if (authUser == null)
         {
-            Button loginButton = (Button) findViewById(R.id.taskListLoginButton);
+            Button loginButton = findViewById(R.id.taskListLoginButton);
             loginButton.setVisibility(View.VISIBLE);
-            Button logoutButton = (Button) findViewById(R.id.taskListLogoutButton);
+            Button logoutButton = findViewById(R.id.taskListLogoutButton);
             logoutButton.setVisibility(View.INVISIBLE);
         }
-        else  // authUser is not null
+        else  // authUser is not null`
         {
             Log.i(TAG, "Username is: " + username);
-            Button loginButton = (Button) findViewById(R.id.taskListLoginButton);
+            Button loginButton = findViewById(R.id.taskListLoginButton);
             loginButton.setVisibility(View.INVISIBLE);
-            Button logoutButton = (Button) findViewById(R.id.taskListLogoutButton);
+            Button logoutButton = findViewById(R.id.taskListLogoutButton);
             logoutButton.setVisibility(View.VISIBLE);
 
 
@@ -201,17 +109,13 @@ public class MainActivity extends AppCompatActivity {
                             {
                                 String userNickname = userAttribute.getValue();
                                 runOnUiThread(() ->
-                                        {
-                                            ((TextView)findViewById(R.id.textViewDisplayUserNicknameMainActivity)).setText(userNickname);
-                                        }
+                                        ((TextView)findViewById(R.id.textViewDisplayUserNicknameMainActivity)).setText(userNickname)
                                 );
                             }
                         }
                     },
                     failure ->
-                    {
-                        Log.i(TAG, "Fetch user attributes failed: " + failure.toString());
-                    }
+                            Log.i(TAG, "Fetch user attributes failed: " + failure)
             );
         }
 
@@ -219,9 +123,7 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("NotifyDataSetChanged")
     private void filteredTask()
     {
-//        String userNickname = preferences.getString(SettingsActivity.USER_NICKNAME_TAG, "No Nickname");
         String teamName = preferences.getString(SettingsActivity.CHOOSE_TEAM_TAG, "No Team Name");
-//        ((TextView)findViewById(R.id.textViewDisplayUserNicknameMainActivity)).setText(getString(R.string.nickname, username));
 
         Amplify.API.query(
                 ModelQuery.list(Task.class),
@@ -292,38 +194,32 @@ public class MainActivity extends AppCompatActivity {
 
     private void setUpLoginAndLogoutButton()
     {
-        Button loginButton = (Button) findViewById(R.id.taskListLoginButton);
+        Button loginButton = findViewById(R.id.taskListLoginButton);
         loginButton.setOnClickListener(v ->
         {
             Intent goToLogInIntent = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(goToLogInIntent);
         });
 
-        Button logoutButton = (Button) findViewById(R.id.taskListLogoutButton);
+        Button logoutButton = findViewById(R.id.taskListLogoutButton);
         logoutButton.setOnClickListener(v ->
-        {
-            Amplify.Auth.signOut(
-                    () ->
-                    {
-                        Log.i(TAG, "Logout succeeded!");
-                        runOnUiThread(() ->
-                                {
-                                    ((TextView) findViewById(R.id.textViewDisplayUserNicknameMainActivity)).setText("");
-                                }
-                        );
-                        Intent goToLogInIntent = new Intent(MainActivity.this, LoginActivity.class);
-                        startActivity(goToLogInIntent);
-                    },
-                    failure ->
-                    {
-                        Log.i(TAG, "Logout failed: " + failure.toString());
-                        runOnUiThread(() ->
+                Amplify.Auth.signOut(
+                        () ->
                         {
-                            Toast.makeText(MainActivity.this, "Log out failed!", Toast.LENGTH_SHORT).show();
-                        });
-                    }
-            );
-        });
+                            Log.i(TAG, "Logout succeeded!");
+                            runOnUiThread(() ->
+                                    ((TextView) findViewById(R.id.textViewDisplayUserNicknameMainActivity)).setText("")
+                            );
+                            Intent goToLogInIntent = new Intent(MainActivity.this, LoginActivity.class);
+                            startActivity(goToLogInIntent);
+                        },
+                        failure ->
+                        {
+                            Log.i(TAG, "Logout failed: " + failure);
+                            runOnUiThread(() ->
+                                    Toast.makeText(MainActivity.this, "Log out failed!", Toast.LENGTH_SHORT).show());
+                        }
+                ));
     }
 
 

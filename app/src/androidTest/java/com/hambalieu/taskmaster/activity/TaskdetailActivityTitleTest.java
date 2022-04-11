@@ -61,7 +61,7 @@ public class TaskdetailActivityTitleTest {
         materialButton.perform(click());
 
         ViewInteraction appCompatEditText = onView(
-                allOf(withId(R.id.editTextSingleTaskInputOnAddTaskActivity),
+                allOf(withId(R.id.editTextEditTaskTitle),
                         childAtPosition(
                                 childAtPosition(
                                         withId(android.R.id.content),
@@ -71,7 +71,7 @@ public class TaskdetailActivityTitleTest {
         appCompatEditText.perform(replaceText("School"), closeSoftKeyboard());
 
         ViewInteraction appCompatEditText2 = onView(
-                allOf(withId(R.id.editTextInputDescriptionOnAddTaskActivity),
+                allOf(withId(R.id.editTextEditTaskDescription),
                         childAtPosition(
                                 childAtPosition(
                                         withId(android.R.id.content),
@@ -98,7 +98,7 @@ public class TaskdetailActivityTitleTest {
         materialTextView.perform(click());
 
         ViewInteraction appCompatEditText3 = onView(
-                allOf(withId(R.id.editTextInputDescriptionOnAddTaskActivity), withText("Finishing workingo homeor"),
+                allOf(withId(R.id.editTextEditTaskDescription), withText("Finishing workingo homeor"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(android.R.id.content),
@@ -108,7 +108,7 @@ public class TaskdetailActivityTitleTest {
         appCompatEditText3.perform(pressImeActionButton());
 
         ViewInteraction materialButton2 = onView(
-                allOf(withId(R.id.buttonAddTaskOnAddTaskActivity), withText("ADD TASK"),
+                allOf(withId(R.id.buttonEditTaskFromTaskDetailPage), withText("ADD TASK"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(android.R.id.content),

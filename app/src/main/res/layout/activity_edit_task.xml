@@ -4,10 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.AddTaskActivity">
+    tools:context=".activity.EditTaskActivity">
+
 
     <EditText
-        android:id="@+id/editTextSingleTaskInputOnAddTaskActivity"
+        android:id="@+id/editTextEditTaskTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -25,11 +26,11 @@
         tools:ignore="DuplicateSpeakableTextCheck" />
 
     <EditText
-        android:id="@+id/editTextInputDescriptionOnAddTaskActivity"
+        android:id="@+id/editTextEditTaskDescription"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="48dp"
         android:layout_marginEnd="32dp"
         android:autofillHints=""
         android:ems="10"
@@ -38,17 +39,17 @@
         android:minHeight="48dp"
         android:textColorHint="#757575"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextSingleTaskInputOnAddTaskActivity"
+        app:layout_constraintTop_toBottomOf="@+id/editTextEditTaskTitle"
         tools:ignore="DuplicateSpeakableTextCheck" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/textViewEditTaskPageHeading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="@string/add_task_"
+        android:text="@string/edit_task"
         android:textSize="28sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.435"
@@ -56,25 +57,25 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textViewSingleTaskTitleOnAddTaskActivity"
+        android:id="@+id/edittaskTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="4dp"
         android:text="@string/task_title"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/editTextSingleTaskInputOnAddTaskActivity"
+        app:layout_constraintBottom_toTopOf="@+id/editTextEditTaskTitle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.101"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/EditTaskDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:text="@string/task_description"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/editTextInputDescriptionOnAddTaskActivity"
+        app:layout_constraintBottom_toTopOf="@+id/editTextEditTaskDescription"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.126"
         app:layout_constraintStart_toStartOf="parent" />
@@ -83,11 +84,15 @@
         android:id="@+id/buttonEditTaskFromTaskDetailPage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="32dp"
         android:text="@string/add_task"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/buttonEditTaskDelete"
+        app:layout_constraintHorizontal_bias="0.01"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonAddImageOnAddTaskActivity" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonAddImageOnAddTaskActivity"
+        app:layout_constraintVertical_bias="0.27"
+        tools:ignore="DuplicateSpeakableTextCheck,DuplicateSpeakableTextCheck" />
 
     <TextView
         android:id="@+id/textViewTotalTaskOnAddTaskActivity"
@@ -119,14 +124,14 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="28dp"
         android:layout_marginEnd="24dp"
         android:contentDescription="@string/task_state"
         android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextInputDescriptionOnAddTaskActivity"
+        app:layout_constraintTop_toBottomOf="@+id/editTextEditTaskDescription"
         tools:ignore="DuplicateSpeakableTextCheck" />
 
     <TextView
@@ -158,11 +163,11 @@
         android:id="@+id/textViewTeamList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="16dp"
         android:text="@string/teams"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.094"
+        app:layout_constraintHorizontal_bias="0.077"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinnerTaskStateAddTaskActivity" />
 
@@ -182,8 +187,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="64dp"
         android:text="@string/delete_image"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/buttonAddImageOnAddTaskActivity"
         app:layout_constraintTop_toBottomOf="@+id/imageViewImageAddTaskActivity" />
 
@@ -192,11 +195,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="36dp"
         android:text="@string/image"
         android:textSize="20sp"
-        app:layout_constraintEnd_toStartOf="@+id/imageViewImageAddTaskActivity"
-        app:layout_constraintHorizontal_bias="0.103"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/addTaskTeamspinner" />
 
@@ -208,8 +209,26 @@
         android:layout_marginEnd="60dp"
         android:contentDescription="@string/image_to_upload"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.955"
+        app:layout_constraintStart_toEndOf="@+id/textViewImageAddTaskActivity"
         app:layout_constraintTop_toBottomOf="@+id/addTaskTeamspinner"
         tools:ignore="ImageContrastCheck"
         tools:srcCompat="@tools:sample/avatars" />
 
+    <Button
+        android:id="@+id/buttonEditTaskDelete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="64dp"
+        android:text="@string/delete_task"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonDeleteImageOnAddTaskActiviyPage"
+        app:layout_constraintVertical_bias="0.742" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+

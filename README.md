@@ -259,4 +259,22 @@
 <img src="/images/lab37/Inkeddynamodb.jpg" width="450">
 
 
-[APK build file](apk_builds/apk_lab37/app-debug.apk) 
+[APK build file](apk_builds/apk_lab37/app-debug.apk)
+
+
+
+# Lab 38 Intent Filter
+
+## Feature Tasks
+
+#### Adding a Task from Another Application
+
+- Added an intent filter to my application such that a user can hit the “share” button on an image in another application, choose TaskMaster as the app to share that image with, and be taken directly to the Add a Task activity page with that image pre-selected.
+
+### Documentation
+
+- Started Working on the lab at 9pm and completed at 2am on April 11th 2022
+
+<img src="/images/lab38/intentsharewithapp.png" width="450">
+<img src="/images/lab38/addtaskintent.png" width="450">
+<img src="/images/lab38/taskdetailpageIntent.png" width="450">

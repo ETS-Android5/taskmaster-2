@@ -6,22 +6,18 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.OpenableColumns;
 import android.util.Log;
-import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -34,11 +30,7 @@ import com.amplifyframework.datastore.generated.model.Task;
 import com.amplifyframework.datastore.generated.model.Team;
 import com.hambalieu.taskmaster.R;
 
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
@@ -46,68 +38,90 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
-public class AddTaskActivity extends AppCompatActivity {
-    public static final String TAG = "AddTaskActivity";
-    Spinner teamSpinner = null;
+public class EditTaskActivity extends AppCompatActivity {
+    private static final String TAG = "Edit Task";
+    private Task taskToEdit = null;
     Spinner taskStateSpinner = null;
-    String imageS3key = "";
-
-
-
-
+    Spinner teamSpinner = null;
+    private CompletableFuture<Task> taskCompletableFuture = null;
     CompletableFuture<List<Team>> teamsFuture = null;
-
     ActivityResultLauncher<Intent> activityResultLauncher;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_task);
+        setContentView(R.layout.activity_edit_task);
+        taskCompletableFuture = new CompletableFuture<>();
         teamsFuture = new CompletableFuture<>();
         activityResultLauncher = getImagePickingActivityResultLauncher();
 
-        setUpCallingIntent();
-        setUpTeamSpinners();
-        submittedTaskButton();
+//
+//        setUpTeamSpinners();
+        submittedEditTaskButton();
         setUpAddImageButton();
-        setUpDeleteImageButton();
-        updateImageButtons();
-
+        setUpUIElementsEdit();
+        setUpDeleteButton();
     }
 
-    private void setUpCallingIntent(){
+    private void setUpUIElementsEdit() {
         Intent callingIntent = getIntent();
+        String taskId = null;
 
-        if ((callingIntent != null) && (callingIntent.getType() != null)
-                && (callingIntent.getType().startsWith("image")))
+        if (callingIntent != null)
         {
-            Uri incomingImageFileUri = callingIntent.getParcelableExtra(Intent.EXTRA_STREAM);
-            if (incomingImageFileUri != null)
-            {
-                InputStream incomingImageFileInputStream = null;
-                try
-                {
-                    incomingImageFileInputStream = getContentResolver().openInputStream(incomingImageFileUri);
-                    String pickedImageFilename = getFileNameFromUri(incomingImageFileUri);
-                    uploadInputStreamToS3(incomingImageFileInputStream, pickedImageFilename, incomingImageFileUri);
-
-
-                } catch (FileNotFoundException fnfe) {
-                    Log.e(TAG, "Could not save calling intent image" + fnfe);
-                }
-
-                ImageView taskImageView = findViewById(R.id.imageViewImageAddTaskActivity);
-                taskImageView.setImageBitmap(BitmapFactory.decodeStream(incomingImageFileInputStream));
-
-            }
+            taskId = callingIntent.getStringExtra(MainActivity.TASK_ID_TAG);
         }
+
+        String taskId2 = taskId;
+
+        Amplify.API.query(
+                ModelQuery.list(Task.class),
+                success ->
+                {
+                    Log.i(TAG, "Read task successfully!");
+
+                    for (Task databaseTask : success.getData())
+                    {
+                        if (databaseTask.getId().equals(taskId2))
+                        {
+                            taskCompletableFuture.complete(databaseTask);
+                        }
+                    }
+
+                    runOnUiThread(() ->
+                    {
+                        // Update UI elements
+                    });
+                },
+                failure -> Log.i(TAG, "Did not read tasks successfully!")
+        );
+
+        try
+        {
+            taskToEdit = taskCompletableFuture.get();
+        }
+        catch (InterruptedException ie)
+        {
+            Log.e(TAG, "InterruptedException while getting task");
+            Thread.currentThread().interrupt();
+        }
+        catch (ExecutionException ee)
+        {
+            Log.e(TAG, "ExecutionException while getting task");
+        }
+
+        EditText taskTitleEditText = ((EditText) findViewById(R.id.editTextEditTaskTitle));
+        EditText taskDescriptionEditText = ((EditText) findViewById(R.id.editTextEditTaskDescription));
+        taskTitleEditText.setText(taskToEdit.getTitle());
+        taskDescriptionEditText.setText(taskToEdit.getDescription());
+        setUpTeamSpinners();
 
     }
 
 
     public void setUpTeamSpinners() {
         teamSpinner = findViewById(R.id.addTaskTeamspinner);
+        taskStateSpinner = findViewById(R.id.spinnerTaskStateAddTaskActivity);
 
         Amplify.API.query(
                 ModelQuery.list(Team.class),
@@ -125,10 +139,13 @@ public class AddTaskActivity extends AppCompatActivity {
                     teamsFuture.complete(teams);
 
                     runOnUiThread(() ->
+                            {
                             teamSpinner.setAdapter(new ArrayAdapter<>(
                                     this,
                                     android.R.layout.simple_spinner_item,
-                                    teamNames)));
+                                    teamNames));
+//                            teamSpinner.getSelectedItem(getSpinnerIndex(teamSpinner, taskToEdit.getTeam().getTeamName()));
+                            });
                 },
                 failure -> {
                     teamsFuture.complete(null);
@@ -136,35 +153,43 @@ public class AddTaskActivity extends AppCompatActivity {
                 }
         );
 
-
-        taskStateSpinner = findViewById(R.id.spinnerTaskStateAddTaskActivity);
         taskStateSpinner.setAdapter(new ArrayAdapter<>(
                 this,
                 android.R.layout.simple_spinner_item,
                 State.values()));
+        taskStateSpinner.setSelection(getSpinnerIndex(taskStateSpinner, taskToEdit.getState().toString()));
 
 
     }
+    private int getSpinnerIndex(Spinner spinner, String stringValueToCheck){
+        for (int i = 0;i < spinner.getCount(); i++){
+            if (spinner.getItemAtPosition(i).toString().equalsIgnoreCase(stringValueToCheck)){
+                return i;
+            }
+        }
+        return 0;
+    }
 
-    public void submittedTaskButton() {
+
+    public void submittedEditTaskButton() {
         Button submitButton = findViewById(R.id.buttonEditTaskFromTaskDetailPage);
 
         submitButton.setOnClickListener(view ->
         {
-            saveTask();
+            saveEditask();
         });
 
         submitButton.onEditorAction(EditorInfo.IME_ACTION_DONE);
     }
 
-    private void saveTask() {
-        String title = ((EditText) findViewById(R.id.editTextSingleTaskInputOnAddTaskActivity)).getText().toString();
-        String description = ((EditText) findViewById(R.id.editTextInputDescriptionOnAddTaskActivity)).getText().toString();
+    private void saveEditask() {
+        String title = ((EditText) findViewById(R.id.editTextEditTaskTitle)).getText().toString();
+        String description = ((EditText) findViewById(R.id.editTextEditTaskDescription)).getText().toString();
         String currentDateString = com.amazonaws.util.DateUtils.formatISO8601Date(new Date());
         String selectedTeamString = teamSpinner.getSelectedItem().toString();
 
-
         List<Team> teams = null;
+
         try
         {
             teams = teamsFuture.get();
@@ -184,7 +209,6 @@ public class AddTaskActivity extends AppCompatActivity {
                 .dateCreated(new Temporal.DateTime(new Date(), 0))
                 .state((State) taskStateSpinner.getSelectedItem())
                 .team(selectedTeam)
-                .taskImageS3Key(imageS3key)
                 .build();
 
         Amplify.API.mutate(
@@ -193,24 +217,51 @@ public class AddTaskActivity extends AppCompatActivity {
                 {
                     Log.i(TAG, "AddTaskActivity.onCreate(): made a task successfully");
 
-                },
+
+                },// success callback
                 failureResponse -> Log.i(TAG, "AddTaskActivity.onCreate(): failed with this response: " + failureResponse) // failure callback
         );
 
-        Toast.makeText(AddTaskActivity.this, "Task Saved", Toast.LENGTH_SHORT).show();
 
+//        Intent goToHomeActivity = new Intent(EditTaskActivity.this, MainActivity.class);
+//        startActivity(goToHomeActivity);
+        //Snackbar.make(findViewById(R.id.textViewSubmittedOnAddTaskActivity), "Task Saved!", Snackbar.LENGTH_SHORT).show();
+        Toast.makeText(EditTaskActivity.this, "Task Updated", Toast.LENGTH_SHORT).show();
+
+    }
+
+    private void setUpDeleteButton(){
+        Button deleteButton = findViewById(R.id.buttonEditTaskDelete);
+        deleteButton.setOnClickListener(v ->
+        {
+            Amplify.API.mutate(
+                    ModelMutation.delete(taskToEdit),
+                    successResponse ->
+                    {
+                        Log.i(TAG, "EditTaskActivity.onCreate(): deleted a task successfully");
+                        Intent goToHomeActivity = new Intent(EditTaskActivity.this, MainActivity.class);
+                        startActivity(goToHomeActivity);
+                    },  // success callback
+                    failureResponse -> Log.i(TAG, "EditProductActivity.onCreate(): failed with this response: " + failureResponse)
+            );
+        });
     }
 
     private void setUpAddImageButton() {
         Button addImageButton = (Button) findViewById(R.id.buttonAddImageOnAddTaskActivity);
-        addImageButton.setOnClickListener(view -> launchImageSelectionIntent());
+        addImageButton.setOnClickListener(b ->
+        {
+            launchImageSelectionIntent();
+        });
 
     }
 
-    private void launchImageSelectionIntent() {
+    private void launchImageSelectionIntent()
+    {
         Intent imageFilePickingIntent = new Intent(Intent.ACTION_GET_CONTENT);
         imageFilePickingIntent.setType("*/*");
-        imageFilePickingIntent.putExtra(Intent.EXTRA_MIME_TYPES, new String[]{"image/jpeg", "image/png", "image/jpg"});
+        imageFilePickingIntent.putExtra(Intent.EXTRA_MIME_TYPES, new String[]{"image/jpeg", "image/png"});
+
         activityResultLauncher.launch(imageFilePickingIntent);
 
     }
@@ -223,19 +274,22 @@ public class AddTaskActivity extends AppCompatActivity {
                             @Override
                             public void onActivityResult(ActivityResult result) {
                                 if (result.getResultCode() == Activity.RESULT_OK) {
-                                    if (result.getData() != null) {
+                                    if (result.getData() != null)
+                                    {
                                         Uri pickedImageFileUri = result.getData().getData();
                                         try
                                         {
                                             InputStream pickedImageInputStream = getContentResolver().openInputStream(pickedImageFileUri);
                                             String pickedImageFilename = getFileNameFromUri(pickedImageFileUri);
                                             Log.i(TAG, "Succeeded in getting input stream from file on phone! Filename is: " + pickedImageFilename);
-                                            uploadInputStreamToS3(pickedImageInputStream, pickedImageFilename, pickedImageFileUri);
-                                        } catch (FileNotFoundException fnfe) {
+                                            uploadInputStreamToS3(pickedImageInputStream, pickedImageFilename);
+                                        } catch (FileNotFoundException fnfe)
+                                        {
                                             Log.e(TAG, "Could not get file from file picker!" + fnfe.getMessage(), fnfe);
                                         }
                                     }
-                                } else {
+                                } else
+                                {
                                     Log.e(TAG, "Activity result error in ActivityResultLauncher.onActivityResult");
                                 }
                             }
@@ -245,27 +299,14 @@ public class AddTaskActivity extends AppCompatActivity {
     }
 
     private void uploadInputStreamToS3(InputStream pickedImageInputStream, String
-            pickedImageFilename, Uri pickedImageFileUri) {
+            pickedImageFilename) {
         Amplify.Storage.uploadInputStream(
                 pickedImageFilename,
                 pickedImageInputStream,
                 success ->
                 {
-                    imageS3key = success.getKey();
-                    updateImageButtons();
-                    saveTask();
-                    ImageView taskImageView = findViewById(R.id.imageViewImageAddTaskActivity);
+
                     Log.i(TAG, "Succeeded in getting file uploaded to S3! Key is: " + success.getKey());
-                    InputStream pickedImageInputStreamUpload = null;
-                    try
-                    {
-                        pickedImageInputStreamUpload = getContentResolver().openInputStream(pickedImageFileUri);
-                    }
-                    catch (FileNotFoundException fnfe)
-                    {
-                        Log.e(TAG, "Could not get file from Uri!" + fnfe.getMessage(), fnfe);
-                    }
-                    taskImageView.setImageBitmap(BitmapFactory.decodeStream(pickedImageInputStreamUpload));
 
                 },
                 failure ->
@@ -273,62 +314,6 @@ public class AddTaskActivity extends AppCompatActivity {
                     Log.i(TAG, "Failure in uploading file uploaded to S3! with filename: " + pickedImageFilename + "with error: " + failure.getMessage());
                 }
         );
-    }
-
-    private void setUpDeleteImageButton() {
-        Button deleteImageButton = (Button) findViewById(R.id.buttonDeleteImageOnAddTaskActiviyPage);
-        deleteImageButton.setOnClickListener(v ->
-        {
-            deleteImageFromS3();
-        });
-    }
-
-    private void deleteImageFromS3() {
-        if (!imageS3key.isEmpty()) {
-            Amplify.Storage.remove(
-                    imageS3key,
-                    success ->
-                    {
-                        imageS3key = "";
-                        ImageView taskImageView = findViewById(R.id.imageViewImageAddTaskActivity);
-
-                        runOnUiThread(() ->
-                                {
-                                    taskImageView.setImageResource(android.R.color.transparent);
-                                }
-                        );
-
-                        updateImageButtons();
-                        Log.i(TAG, "Succeeded in deleting file on S3! Key is: " + success.getKey());
-                    },
-                    failure ->
-                    {
-                        Log.e(TAG, "Failure in deleting file on S3 with key: " + imageS3key + " with error: " + failure.getMessage());
-                    }
-            );
-        }
-    }
-
-
-    private void updateImageButtons() {
-        Button addImageButton = (Button) findViewById(R.id.buttonAddImageOnAddTaskActivity);
-        Button deleteImageButton = (Button) findViewById(R.id.buttonDeleteImageOnAddTaskActiviyPage);
-
-        if (imageS3key.isEmpty()) {
-            runOnUiThread(() ->
-                    {
-                        deleteImageButton.setVisibility(View.INVISIBLE);
-                        addImageButton.setVisibility(View.VISIBLE);
-                    }
-            );
-        } else {
-            runOnUiThread(() ->
-                    {
-                        deleteImageButton.setVisibility(View.VISIBLE);
-                        addImageButton.setVisibility(View.INVISIBLE);
-                    }
-            );
-        }
     }
 
 
@@ -353,23 +338,6 @@ public class AddTaskActivity extends AppCompatActivity {
             }
         }
         return result;
+
     }
-
 }
-
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-////        Intent callingIntent = getIntent();
-////        if ((callingIntent != null) && (callingIntent.getType() != null)
-////                && (callingIntent.getType().equals("text/plain"))) {
-////            String callingText = callingIntent.getStringExtra(Intent.EXTRA_TEXT);
-////            if (callingText != null) {
-////                ((EditText) findViewById(R.id.editTextSingleTaskInputOnAddTaskActivity)).setText(callingText);
-////            }
-////
-////        }
-//
-//    }
-
-

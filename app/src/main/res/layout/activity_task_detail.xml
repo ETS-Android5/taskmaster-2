@@ -6,6 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".activity.TaskDetailActivity">
 
+  <Button
+      android:id="@+id/buttonDeleteTaskOnTaskDetailPage"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="72dp"
+      android:layout_marginTop="48dp"
+      android:text="@string/delete_task"
+      app:layout_constraintStart_toEndOf="@+id/buttonEditTaskViewTask"
+      app:layout_constraintTop_toTopOf="parent" />
+
   <TextView
       android:id="@+id/textViewTaskTitleTaskDetailActivity"
       android:layout_width="wrap_content"
@@ -41,12 +51,23 @@
       android:id="@+id/imageViewImageAddTaskActivity"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_marginStart="128dp"
-      android:layout_marginTop="84dp"
+      android:layout_marginTop="48dp"
       android:contentDescription="@string/imagetaskdetailpage"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.498"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/textViewStateOnTaskDetailActivity"
       tools:ignore="ImageContrastCheck"
       tools:srcCompat="@tools:sample/avatars" />
+
+  <Button
+      android:id="@+id/buttonEditTaskViewTask"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="40dp"
+      android:layout_marginTop="48dp"
+      android:text="@string/edit_task"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
