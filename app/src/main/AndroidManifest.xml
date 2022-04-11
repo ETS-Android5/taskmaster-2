@@ -11,6 +11,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Taskmaster">
         <activity
+            android:name=".activity.EditTaskActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.VerifyAccountActivity"
             android:exported="false" />
         <activity
@@ -25,21 +28,24 @@
         <activity
             android:name=".activity.SettingsActivity"
             android:exported="false" />
+
         <activity
             android:name=".activity.AllTasksActivity"
             android:exported="false" />
-
         <activity
             android:name=".activity.AddTaskActivity"
-            android:exported="true" />
-
+            android:exported="true">
+            <intent-filter android:label="Grab image from new task">
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="image/*" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".activity.MainActivity"
             android:exported="true">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

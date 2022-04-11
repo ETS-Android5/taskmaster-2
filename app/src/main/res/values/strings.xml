@@ -42,6 +42,9 @@
 
     <string name="imagetaskdtail">imagetaskdtail</string>
     <string name="imagetaskdetailpage">ImageTaskDetailPage</string>
+    <string name="edit_task">Edit Task</string>
+    <string name="delete_button">Delete Button</string>
+    <string name="detele_task">detele task</string>
 
 
 </resources>
