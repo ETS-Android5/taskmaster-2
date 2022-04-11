@@ -277,4 +277,7 @@
 
 <img src="/images/lab38/intentsharewithapp.png" width="450">
 <img src="/images/lab38/addtaskintent.png" width="450">
-<img src="/images/lab38/taskdetailpageIntent.png" width="450">
+<img src="/images/lab38/taskdetailpageIntent.png" width="450">      
+
+
+[APK build file](apk_builds/apk_lab38/app-debug.apk)
