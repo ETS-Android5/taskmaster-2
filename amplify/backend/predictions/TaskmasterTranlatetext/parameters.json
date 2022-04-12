@@ -1,0 +1,14 @@
+{
+    "resourceName": "TaskmasterTranlatetext",
+    "convertPolicyName": "translateTextPolicy9c9d87d9",
+    "authRoleName": {
+        "Ref": "AuthRoleName"
+    },
+    "unauthRoleName": {
+        "Ref": "UnauthRoleName"
+    },
+    "convertType": "translateText",
+    "sourceLang": "en",
+    "targetLang": "ar",
+    "access": "authAndGuest"
+}

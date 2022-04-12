@@ -304,3 +304,45 @@
 <img src="/images/lab39/locationaws.png" width="450">
 
 [APK build file](apk_builds/apk_lab39/app-debug.apk)
+
+
+
+# Lab 41 Analytics and Text To Speech (Predictions)
+
+### Overview
+
+-My app will start collecting basic aggregated analytics on user usage, and will also read task descriptions to users out loud.
+
+### Feature Tasks
+
+### Analytics
+
+- On the "Main" activity , started recording AnalyticsEvent for when the user visits the main activity page.I also made sure that I can view instances of that event, including their custom properties, in Amazon Pinpoint.
+
+### Text To Speech
+
+- On the Task Detail activity, I add a button to read out the task's description using the Amplify Predictions library.
+
+### Second Predictions Integration
+
+- On the Task Detail activity, I added the amplify translate language prediction so that when the speak button is clicked to read out the task's description the text is also translated to Arabic on the console  using the Amplify Predictions library.
+
+#### Documentation
+
+- started working on this lab at 3am and completed at 5:30am on April 12th 2022.
+
+<img src="/images/lab41/awspinpoint.png" width="450">
+<img src="/images/lab41/texttospeak.png" width="450">
+<img src="/images/lab41/translatetext.png" width="450">
+
+
+[APK build file](apk_builds/apk_lab41/app-debug.apk)    
+
+### Resources
+
+[Amplify Getting Started With Analytics](https://docs.amplify.aws/lib/analytics/getting-started/q/platform/android/)  
+
+[Amplify Getting Started With Predictions](https://docs.amplify.aws/lib/predictions/getting-started/q/platform/android/) 
+
+[Amplify Text To Speech](https://docs.amplify.aws/lib/predictions/text-speech/q/platform/android/)        
+

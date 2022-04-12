@@ -31,9 +31,8 @@
       android:id="@+id/textViewBodyOnTaskDetailActivity"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_marginTop="52dp"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintHorizontal_bias="0.459"
+      android:layout_marginStart="180dp"
+      android:layout_marginTop="40dp"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/textViewTaskTitleTaskDetailActivity" />
 
@@ -91,5 +90,16 @@
       app:layout_constraintHorizontal_bias="0.467"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/textViewLatitude" />
+
+  <Button
+      android:id="@+id/buttonSpeechGenerator"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="172dp"
+      android:text="@string/speak"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.862"
+      app:layout_constraintStart_toEndOf="@+id/textViewBodyOnTaskDetailActivity"
+      app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
