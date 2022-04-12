@@ -20,10 +20,10 @@
       android:id="@+id/textViewTaskTitleTaskDetailActivity"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_marginTop="172dp"
+      android:layout_marginTop="132dp"
       android:text="@string/task_title_task_detail_activity"
       app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintHorizontal_bias="0.501"
+      app:layout_constraintHorizontal_bias="0.477"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent" />
 
@@ -31,9 +31,9 @@
       android:id="@+id/textViewBodyOnTaskDetailActivity"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_marginTop="88dp"
+      android:layout_marginTop="52dp"
       app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintHorizontal_bias="0.467"
+      app:layout_constraintHorizontal_bias="0.459"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/textViewTaskTitleTaskDetailActivity" />
 
@@ -41,9 +41,9 @@
       android:id="@+id/textViewStateOnTaskDetailActivity"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_marginTop="124dp"
+      android:layout_marginTop="52dp"
       app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintHorizontal_bias="0.467"
+      app:layout_constraintHorizontal_bias="0.437"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/textViewBodyOnTaskDetailActivity" />
 
@@ -51,12 +51,14 @@
       android:id="@+id/imageViewImageAddTaskActivity"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_marginTop="48dp"
+      android:layout_marginBottom="28dp"
       android:contentDescription="@string/imagetaskdetailpage"
+      app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintHorizontal_bias="0.498"
+      app:layout_constraintHorizontal_bias="0.413"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/textViewStateOnTaskDetailActivity"
+      app:layout_constraintTop_toBottomOf="@+id/textViewLongitude"
+      app:layout_constraintVertical_bias="1.0"
       tools:ignore="ImageContrastCheck"
       tools:srcCompat="@tools:sample/avatars" />
 
@@ -69,5 +71,25 @@
       android:text="@string/edit_task"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent" />
+
+  <TextView
+      android:id="@+id/textViewLatitude"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="60dp"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.459"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/textViewStateOnTaskDetailActivity" />
+
+  <TextView
+      android:id="@+id/textViewLongitude"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="52dp"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.467"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/textViewLatitude" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

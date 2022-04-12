@@ -33,6 +33,8 @@ public final class Task implements Model {
   public static final QueryField DATE_CREATED = field("Task", "dateCreated");
   public static final QueryField STATE = field("Task", "State");
   public static final QueryField TASK_IMAGE_S3_KEY = field("Task", "taskImageS3Key");
+  public static final QueryField TASK_LATITUDE = field("Task", "taskLatitude");
+  public static final QueryField TASK_LONGITUDE = field("Task", "taskLongitude");
   public static final QueryField TEAM = field("Task", "teamId");
   private final @ModelField(targetType="ID", isRequired = true) String id;
   private final @ModelField(targetType="String", isRequired = true) String title;
@@ -40,6 +42,8 @@ public final class Task implements Model {
   private final @ModelField(targetType="AWSDateTime") Temporal.DateTime dateCreated;
   private final @ModelField(targetType="State") State State;
   private final @ModelField(targetType="String") String taskImageS3Key;
+  private final @ModelField(targetType="String") String taskLatitude;
+  private final @ModelField(targetType="String") String taskLongitude;
   private final @ModelField(targetType="Team") @BelongsTo(targetName = "teamId", type = Team.class) Team team;
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime createdAt;
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime updatedAt;
@@ -67,6 +71,14 @@ public final class Task implements Model {
       return taskImageS3Key;
   }
   
+  public String getTaskLatitude() {
+      return taskLatitude;
+  }
+  
+  public String getTaskLongitude() {
+      return taskLongitude;
+  }
+  
   public Team getTeam() {
       return team;
   }
@@ -79,13 +91,15 @@ public final class Task implements Model {
       return updatedAt;
   }
   
-  private Task(String id, String title, String description, Temporal.DateTime dateCreated, State State, String taskImageS3Key, Team team) {
+  private Task(String id, String title, String description, Temporal.DateTime dateCreated, State State, String taskImageS3Key, String taskLatitude, String taskLongitude, Team team) {
     this.id = id;
     this.title = title;
     this.description = description;
     this.dateCreated = dateCreated;
     this.State = State;
     this.taskImageS3Key = taskImageS3Key;
+    this.taskLatitude = taskLatitude;
+    this.taskLongitude = taskLongitude;
     this.team = team;
   }
   
@@ -103,6 +117,8 @@ public final class Task implements Model {
               ObjectsCompat.equals(getDateCreated(), task.getDateCreated()) &&
               ObjectsCompat.equals(getState(), task.getState()) &&
               ObjectsCompat.equals(getTaskImageS3Key(), task.getTaskImageS3Key()) &&
+              ObjectsCompat.equals(getTaskLatitude(), task.getTaskLatitude()) &&
+              ObjectsCompat.equals(getTaskLongitude(), task.getTaskLongitude()) &&
               ObjectsCompat.equals(getTeam(), task.getTeam()) &&
               ObjectsCompat.equals(getCreatedAt(), task.getCreatedAt()) &&
               ObjectsCompat.equals(getUpdatedAt(), task.getUpdatedAt());
@@ -118,6 +134,8 @@ public final class Task implements Model {
       .append(getDateCreated())
       .append(getState())
       .append(getTaskImageS3Key())
+      .append(getTaskLatitude())
+      .append(getTaskLongitude())
       .append(getTeam())
       .append(getCreatedAt())
       .append(getUpdatedAt())
@@ -135,6 +153,8 @@ public final class Task implements Model {
       .append("dateCreated=" + String.valueOf(getDateCreated()) + ", ")
       .append("State=" + String.valueOf(getState()) + ", ")
       .append("taskImageS3Key=" + String.valueOf(getTaskImageS3Key()) + ", ")
+      .append("taskLatitude=" + String.valueOf(getTaskLatitude()) + ", ")
+      .append("taskLongitude=" + String.valueOf(getTaskLongitude()) + ", ")
       .append("team=" + String.valueOf(getTeam()) + ", ")
       .append("createdAt=" + String.valueOf(getCreatedAt()) + ", ")
       .append("updatedAt=" + String.valueOf(getUpdatedAt()))
@@ -162,6 +182,8 @@ public final class Task implements Model {
       null,
       null,
       null,
+      null,
+      null,
       null
     );
   }
@@ -173,6 +195,8 @@ public final class Task implements Model {
       dateCreated,
       State,
       taskImageS3Key,
+      taskLatitude,
+      taskLongitude,
       team);
   }
   public interface TitleStep {
@@ -187,6 +211,8 @@ public final class Task implements Model {
     BuildStep dateCreated(Temporal.DateTime dateCreated);
     BuildStep state(State state);
     BuildStep taskImageS3Key(String taskImageS3Key);
+    BuildStep taskLatitude(String taskLatitude);
+    BuildStep taskLongitude(String taskLongitude);
     BuildStep team(Team team);
   }
   
@@ -198,6 +224,8 @@ public final class Task implements Model {
     private Temporal.DateTime dateCreated;
     private State State;
     private String taskImageS3Key;
+    private String taskLatitude;
+    private String taskLongitude;
     private Team team;
     @Override
      public Task build() {
@@ -210,6 +238,8 @@ public final class Task implements Model {
           dateCreated,
           State,
           taskImageS3Key,
+          taskLatitude,
+          taskLongitude,
           team);
     }
     
@@ -245,6 +275,18 @@ public final class Task implements Model {
     }
     
     @Override
+     public BuildStep taskLatitude(String taskLatitude) {
+        this.taskLatitude = taskLatitude;
+        return this;
+    }
+    
+    @Override
+     public BuildStep taskLongitude(String taskLongitude) {
+        this.taskLongitude = taskLongitude;
+        return this;
+    }
+    
+    @Override
      public BuildStep team(Team team) {
         this.team = team;
         return this;
@@ -262,13 +304,15 @@ public final class Task implements Model {
   
 
   public final class CopyOfBuilder extends Builder {
-    private CopyOfBuilder(String id, String title, String description, Temporal.DateTime dateCreated, State state, String taskImageS3Key, Team team) {
+    private CopyOfBuilder(String id, String title, String description, Temporal.DateTime dateCreated, State state, String taskImageS3Key, String taskLatitude, String taskLongitude, Team team) {
       super.id(id);
       super.title(title)
         .description(description)
         .dateCreated(dateCreated)
         .state(state)
         .taskImageS3Key(taskImageS3Key)
+        .taskLatitude(taskLatitude)
+        .taskLongitude(taskLongitude)
         .team(team);
     }
     
@@ -295,6 +339,16 @@ public final class Task implements Model {
     @Override
      public CopyOfBuilder taskImageS3Key(String taskImageS3Key) {
       return (CopyOfBuilder) super.taskImageS3Key(taskImageS3Key);
+    }
+    
+    @Override
+     public CopyOfBuilder taskLatitude(String taskLatitude) {
+      return (CopyOfBuilder) super.taskLatitude(taskLatitude);
+    }
+    
+    @Override
+     public CopyOfBuilder taskLongitude(String taskLongitude) {
+      return (CopyOfBuilder) super.taskLongitude(taskLongitude);
     }
     
     @Override
