@@ -5,11 +5,14 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -32,6 +35,8 @@ import com.amplifyframework.core.model.temporal.Temporal;
 import com.amplifyframework.datastore.generated.model.State;
 import com.amplifyframework.datastore.generated.model.Task;
 import com.amplifyframework.datastore.generated.model.Team;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.hambalieu.taskmaster.R;
 
 
@@ -53,9 +58,11 @@ public class AddTaskActivity extends AppCompatActivity {
     String imageS3key = "";
 
 
-
-
     CompletableFuture<List<Team>> teamsFuture = null;
+
+
+
+    FusedLocationProviderClient locationProviderClient = null;
 
     ActivityResultLauncher<Intent> activityResultLauncher;
 
@@ -67,13 +74,37 @@ public class AddTaskActivity extends AppCompatActivity {
         teamsFuture = new CompletableFuture<>();
         activityResultLauncher = getImagePickingActivityResultLauncher();
 
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            Log.e(TAG ,"Application does not have access to either ACCESS_FINE_LOCATION or ACCESS_COARSE_LOCATION" );
+            return;
+        }
+
+        requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+
+        locationProviderClient = LocationServices.getFusedLocationProviderClient(getApplicationContext());
+        locationProviderClient.flushLocations();
+        locationProviderClient.getLastLocation().addOnSuccessListener(location ->
+        {
+            Log.i(TAG, "Our latitude: " + location.getLatitude());
+            Log.i(TAG, "Our longitude: " + location.getLongitude());
+        });
+
+
+
         setUpCallingIntent();
         setUpTeamSpinners();
         submittedTaskButton();
         setUpAddImageButton();
         setUpDeleteImageButton();
         updateImageButtons();
-
     }
 
     private void setUpCallingIntent(){
@@ -158,6 +189,20 @@ public class AddTaskActivity extends AppCompatActivity {
     }
 
     private void saveTask() {
+
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            Log.e(TAG ,"Application does not have access to either ACCESS_FINE_LOCATION or ACCESS_COARSE_LOCATION" );
+            return;
+        }
+
         String title = ((EditText) findViewById(R.id.editTextSingleTaskInputOnAddTaskActivity)).getText().toString();
         String description = ((EditText) findViewById(R.id.editTextInputDescriptionOnAddTaskActivity)).getText().toString();
         String currentDateString = com.amazonaws.util.DateUtils.formatISO8601Date(new Date());
@@ -178,26 +223,46 @@ public class AddTaskActivity extends AppCompatActivity {
 
         Team selectedTeam = teams.stream().filter(c -> c.getTeamName().equals(selectedTeamString)).findAny().orElseThrow(RuntimeException::new);
 
-        Task newTask = Task.builder()
-                .title(title)
-                .description(description)
-                .dateCreated(new Temporal.DateTime(new Date(), 0))
-                .state((State) taskStateSpinner.getSelectedItem())
-                .team(selectedTeam)
-                .taskImageS3Key(imageS3key)
-                .build();
+        locationProviderClient.getLastLocation().addOnSuccessListener(location ->
+        {
+            if(location == null)
+            {
+                Log.e(TAG, "Location callback was null");
 
-        Amplify.API.mutate(
-                ModelMutation.create(newTask), // making a GraphQL request to the cloud
-                successResponse ->
-                {
-                    Log.i(TAG, "AddTaskActivity.onCreate(): made a task successfully");
+            }
+            String currentLatitude = Double.toString(location.getLatitude());
+            String currentLongitude = Double.toString(location.getLongitude());
+            Log.i(TAG, "Our latitude: " + location.getLatitude());
+            Log.i(TAG, "Our longitude: " + location.getLongitude());
+            savedTask(title, description, currentLatitude, currentLongitude, selectedTeam);
 
-                },
-                failureResponse -> Log.i(TAG, "AddTaskActivity.onCreate(): failed with this response: " + failureResponse) // failure callback
-        );
+        }
+        ).addOnCanceledListener(()-> {
+            Log.e(TAG, "Location request was canceled");})
+        .addOnFailureListener(failure -> {
+            Log.e(TAG, "Location request failed Error was: " + failure.getMessage(), failure.getCause());})
+        .addOnCompleteListener(complete -> {
+            Log.e(TAG, "Location request completed");
+        });
 
-        Toast.makeText(AddTaskActivity.this, "Task Saved", Toast.LENGTH_SHORT).show();
+
+//        String currentLatitude = "";
+//        String currentLongitude = "";
+//        try
+//        {
+//            currentLatitude = latitudeFuture.get();
+//            currentLongitude = longitudeFuture.get();
+//        }
+//        catch (InterruptedException ie)
+//        {
+//            Log.e(TAG, "InterruptedException while getting Lat/long");
+//            Thread.currentThread().interrupt();
+//        }
+//        catch (ExecutionException ee)
+//        {
+//            Log.e(TAG, "ExecutionException while getting Lat/Long");
+//        }
+
 
     }
 
@@ -353,6 +418,33 @@ public class AddTaskActivity extends AppCompatActivity {
             }
         }
         return result;
+    }
+
+    private void savedTask(String title, String description, String latitude, String longitude, Team selectedTeam)
+    {
+
+        Task newTask = Task.builder()
+                .title(title)
+                .description(description)
+                .dateCreated(new Temporal.DateTime(new Date(), 0))
+                .state((State) taskStateSpinner.getSelectedItem())
+                .team(selectedTeam)
+                .taskLatitude(latitude)
+                .taskLongitude(longitude)
+                .taskImageS3Key(imageS3key)
+                .build();
+
+        Amplify.API.mutate(
+                ModelMutation.create(newTask), // making a GraphQL request to the cloud
+                successResponse ->
+                {
+                    Log.i(TAG, "AddTaskActivity.onCreate(): made a task successfully");
+
+                },
+                failureResponse -> Log.i(TAG, "AddTaskActivity.onCreate(): failed with this response: " + failureResponse) // failure callback
+        );
+
+        Toast.makeText(AddTaskActivity.this, "Task Saved", Toast.LENGTH_SHORT).show();
     }
 
 }

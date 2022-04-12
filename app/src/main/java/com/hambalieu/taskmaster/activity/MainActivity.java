@@ -44,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
     public static final String TASK_DETAIL_TITLE_TASK_TAG = "Task Detail Title";
     public static final String TASK_BODY_TAG = "Task Detail Body";
     public static final String TASK_STATE_TAG = "Task Detail State";
+    public static final String TASK_LATITUDE_TAG = "Task Detail Latitude";
+    public static final String TASK_LONGITUDE_TAG = "Task Detail Longitude";
     public static final String TASK_IMAGE_TAG = "TaskDetailActivity";
 
 
@@ -60,16 +62,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         init();
         buttonToGoAddTaskPage();
         buttonToGoAllTaskPage();
         buttonToGoSettingsPage();
         taskListRecyclerView();
         setUpLoginAndLogoutButton();
-
-
-
 
     }
 
@@ -89,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
             Button logoutButton = findViewById(R.id.taskListLogoutButton);
             logoutButton.setVisibility(View.INVISIBLE);
         }
-        else  // authUser is not null`
+        else
         {
             Log.i(TAG, "Username is: " + username);
             Button loginButton = findViewById(R.id.taskListLoginButton);

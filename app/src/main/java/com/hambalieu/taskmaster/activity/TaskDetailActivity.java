@@ -11,7 +11,6 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.amplifyframework.api.graphql.model.ModelMutation;
-import com.amplifyframework.api.graphql.model.ModelQuery;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.Task;
 import com.amplifyframework.datastore.generated.model.Team;
@@ -20,7 +19,6 @@ import com.hambalieu.taskmaster.R;
 import java.io.File;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 
 
 public class TaskDetailActivity extends AppCompatActivity {
@@ -48,18 +46,26 @@ public class TaskDetailActivity extends AppCompatActivity {
         String taskTitle = null;
         String taskBody = null;
         String taskState = null;
+        String latitude = null;
+        String longitude = null;
         String imageS3Key = "";
+
 
         if (callingIntent != null) {
             taskTitle = callingIntent.getStringExtra(MainActivity.TASK_DETAIL_TITLE_TASK_TAG);
             taskBody = callingIntent.getStringExtra(MainActivity.TASK_BODY_TAG);
             taskState = callingIntent.getStringExtra(MainActivity.TASK_STATE_TAG);
+            latitude = callingIntent.getStringExtra(MainActivity.TASK_LATITUDE_TAG);
+            longitude = callingIntent.getStringExtra(MainActivity.TASK_LONGITUDE_TAG);
             imageS3Key = callingIntent.getStringExtra(MainActivity.TASK_IMAGE_TAG);
 
         }
         TextView taskDetailTextView = findViewById(R.id.textViewTaskTitleTaskDetailActivity);
         TextView taskDetailbodyTextView = findViewById(R.id.textViewBodyOnTaskDetailActivity);
         TextView taskDetailStateTextView = findViewById(R.id.textViewStateOnTaskDetailActivity);
+
+        TextView taskDetailLatitudeTextView = findViewById(R.id.textViewLatitude);
+        TextView taskDetailLongitudeTextView = findViewById(R.id.textViewLongitude);
 
         if (taskTitle != null) {
             taskDetailTextView.setText(taskTitle);
@@ -70,6 +76,20 @@ public class TaskDetailActivity extends AppCompatActivity {
 
         taskDetailbodyTextView.setText(taskBody);
         taskDetailStateTextView.setText(taskState);
+
+        if(latitude != null) {
+            taskDetailLatitudeTextView.setText(latitude);
+        } else {
+            taskDetailLatitudeTextView.setText("No Location Latitude");
+        }
+
+        if(longitude != null) {
+            taskDetailLongitudeTextView.setText(longitude);
+        } else {
+            taskDetailLongitudeTextView.setText("No Location Longitude");
+        }
+
+
 
         if (imageS3Key != null && !imageS3Key.isEmpty()) {
             String finalImageS3Key = imageS3Key;

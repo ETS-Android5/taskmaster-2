@@ -281,3 +281,26 @@
 
 
 [APK build file](apk_builds/apk_lab38/app-debug.apk)
+
+
+# Lab 39 Location
+
+## Feature Tasks
+
+#### Location 
+
+- When a user adds a Task their Location is retrieved and included as part of the saved Task.
+
+#### Displaying Location 
+
+- On the Task Detail activity, the location of a Task is displayed if it exists.
+
+
+### Documentation
+
+- Started Working on the lab at 7pm and completed at 11pm on April 11th 2022
+
+<img src="/images/lab39/locationtaskdetail.png" width="450">
+<img src="/images/lab39/locationaws.png" width="450">
+
+[APK build file](apk_builds/apk_lab39/app-debug.apk)

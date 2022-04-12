@@ -10,6 +10,8 @@ mutation CreateTask(
     dateCreated
     State
     taskImageS3Key
+    taskLatitude
+    taskLongitude
     teamId
     team {
       id
@@ -35,6 +37,8 @@ mutation UpdateTask(
     dateCreated
     State
     taskImageS3Key
+    taskLatitude
+    taskLongitude
     teamId
     team {
       id
@@ -60,6 +64,8 @@ mutation DeleteTask(
     dateCreated
     State
     taskImageS3Key
+    taskLatitude
+    taskLongitude
     teamId
     team {
       id
@@ -89,6 +95,8 @@ mutation CreateTeam(
         dateCreated
         State
         taskImageS3Key
+        taskLatitude
+        taskLongitude
         teamId
         createdAt
         updatedAt
@@ -114,6 +122,8 @@ mutation UpdateTeam(
         dateCreated
         State
         taskImageS3Key
+        taskLatitude
+        taskLongitude
         teamId
         createdAt
         updatedAt
@@ -139,6 +149,8 @@ mutation DeleteTeam(
         dateCreated
         State
         taskImageS3Key
+        taskLatitude
+        taskLongitude
         teamId
         createdAt
         updatedAt
