@@ -45,6 +45,8 @@
     <string name="edit_task">Edit Task</string>
     <string name="delete_button">Delete Button</string>
     <string name="detele_task">detele task</string>
+    <string name="button">Button</string>
+    <string name="speak">Speak</string>
 
 
 </resources>

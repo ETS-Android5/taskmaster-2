@@ -2,6 +2,7 @@ package com.hambalieu.taskmaster.activity;
 
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -14,9 +15,15 @@ import com.amplifyframework.api.graphql.model.ModelMutation;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.Task;
 import com.amplifyframework.datastore.generated.model.Team;
+import com.amplifyframework.predictions.models.LanguageType;
 import com.hambalieu.taskmaster.R;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
@@ -25,20 +32,24 @@ public class TaskDetailActivity extends AppCompatActivity {
 
     public static final String TAG = "TaskDetailActivity";
     private Task taskToDelete = null;
-
     private CompletableFuture<Task> taskCompletableFuture = null;
     CompletableFuture<List<Team>> teamsFuture = null;
 
 
+    private MediaPlayer mp = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_detail);
+
+        mp = new MediaPlayer();
         taskCompletableFuture = new CompletableFuture<>();
         teamsFuture = new CompletableFuture<>();
         ;
+
         setUpUIElement();
+        setUpSpeakButton();
 
     }
     private void setUpUIElement() {
@@ -105,6 +116,29 @@ public class TaskDetailActivity extends AppCompatActivity {
         }
 
     }
+
+    private void setUpSpeakButton()
+    {
+
+        Button speakButton = (Button)findViewById(R.id.buttonSpeechGenerator);
+        speakButton.setOnClickListener(b ->
+        {
+            String textToSpeakDescription = ((TextView)findViewById(R.id.textViewBodyOnTaskDetailActivity)).getText().toString();
+            Amplify.Predictions.convertTextToSpeech(
+                    textToSpeakDescription,
+                    result -> playAudio(result.getAudioData()),
+                    error -> Log.e(TAG, "Conversion failed", error)
+            );
+
+            Amplify.Predictions.translateText(
+                    textToSpeakDescription, LanguageType.ENGLISH, LanguageType.ARABIC,
+                    result -> Log.i(TAG, result.getTranslatedText()),
+                    error -> Log.e(TAG, "Translation failed", error)
+            );
+
+        });
+    }
+
     private void setUpDeleteButton(){
         Button deleteButton = findViewById(R.id.buttonDeleteTaskOnTaskDetailPage);
         deleteButton.setOnClickListener(v ->
@@ -121,5 +155,21 @@ public class TaskDetailActivity extends AppCompatActivity {
             );
         });
     }
+    private void playAudio(InputStream data) {
+        File mp3File = new File(getCacheDir(), "audio.mp3");
 
+        try (OutputStream out = new FileOutputStream(mp3File)) {
+            byte[] buffer = new byte[8 * 1_024];
+            int bytesRead;
+            while ((bytesRead = data.read(buffer)) != -1) {
+                out.write(buffer, 0, bytesRead);
+            }
+            mp.reset();
+            mp.setOnPreparedListener(MediaPlayer::start);
+            mp.setDataSource(new FileInputStream(mp3File).getFD());
+            mp.prepareAsync();
+        } catch (IOException error) {
+            Log.e(TAG, "Error writing audio file", error);
+        }
+    }
 }

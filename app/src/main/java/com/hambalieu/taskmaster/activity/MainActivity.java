@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.amplifyframework.analytics.AnalyticsEvent;
 import com.amplifyframework.api.graphql.model.ModelQuery;
 import com.amplifyframework.auth.AuthUser;
 import com.amplifyframework.auth.AuthUserAttribute;
@@ -34,6 +35,7 @@ import com.hambalieu.taskmaster.adapter.TaskListRecyclerViewAdapter;
 
 import java.util.ArrayList;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -74,6 +76,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected  void onResume(){
         super.onResume();
+        AnalyticsEvent event =AnalyticsEvent.builder()
+                .name("resumedApp")
+                .addProperty("timeResumed", Long.toString(new Date().getTime()))
+                .addProperty("eventDescription", "Resumed MainActivity")
+                .build();
+
+        Amplify.Analytics.recordEvent(event);
+
+
         filteredTask();
         taskListRecyclerView();
 
@@ -150,6 +161,15 @@ public class MainActivity extends AppCompatActivity {
     {
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         taskList = new ArrayList<>();
+
+        //Analytics Part of the code
+        AnalyticsEvent event =AnalyticsEvent.builder()
+                .name("openedApp")
+                .addProperty("timeOpened", Long.toString(new Date().getTime()))
+                .addProperty("eventDescription", "Opened MainActivity")
+                .build();
+
+        Amplify.Analytics.recordEvent(event);
 
     }
 
