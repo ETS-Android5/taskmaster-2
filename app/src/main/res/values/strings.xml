@@ -47,6 +47,9 @@
     <string name="detele_task">detele task</string>
     <string name="button">Button</string>
     <string name="speak">Speak</string>
+    <string name="interstitial_ad">Interstitial Ad</string>
+    <string name="rewards_ad">Rewards Ad</string>
+    <string name="rewards_ad_text_view"></string>
 
 
 </resources>

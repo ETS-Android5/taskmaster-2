@@ -346,3 +346,43 @@
 
 [Amplify Text To Speech](https://docs.amplify.aws/lib/predictions/text-speech/q/platform/android/)        
 
+
+
+
+# Lab42  Monetization and AdMob Ads     
+
+## Overview 
+
+- Integrated AdMob Banner Ads, AdMob Interstitial Ads and  AdMob Rewarded Ads via Google aAdMob.
+
+### Feature Tasks
+
+#### Banner Ad
+
+- On the "Main" activity, I added a banner ad to the bottom of the page and display a Google test ad there.
+
+#### Interstitial Ad
+
+- I Added a button on the "Main" activity that allows users to see an interstitial ad. 
+
+#### Rewarded Ad
+
+- I Added a button to the "Main" activity that allows users to see a rewarded ad using a Google test ad. When the user clicks the close button, the user sees their reward in a text field next to the button.
+
+#### Documentation
+
+- started working on this lab at 12am and completed at 2:00am on April 25th 2022.
+
+<img src="/images/lab42/banner.png" width="450">
+<img src="/images/lab42/interstitial.png" width="450">
+<img src="/images/lab42/rewardpoints.png" width="450">
+<img src="/images/lab42/rewards.png" width="450">
+
+
+[APK build file](apk_builds/apk_lab42/app-debug.apk)
+
+### Resources
+
+[Banner Ads](https://developers.google.com/admob/android/banner)            
+[Interstitial Ads](https://developers.google.com/admob/android/interstitial)       
+[Rewarded Ads](https://developers.google.com/admob/android/rewarded)          
