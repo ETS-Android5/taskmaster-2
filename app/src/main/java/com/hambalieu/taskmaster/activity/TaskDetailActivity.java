@@ -155,6 +155,7 @@ public class TaskDetailActivity extends AppCompatActivity {
             );
         });
     }
+
     private void playAudio(InputStream data) {
         File mp3File = new File(getCacheDir(), "audio.mp3");
 
